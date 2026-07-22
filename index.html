@@ -3,6 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="color-scheme" content="dark">
+<meta name="theme-color" content="#080C14">
 <title>Joe Automated | AI Automation Engineer & Workflow Architect</title>
 <meta name="description" content="I help businesses and creators save hundreds of hours by building custom AI Agents, integrating LLMs, and streamlining complex workflows with n8n, Node.js, and custom API pipelines.">
 
@@ -44,7 +46,7 @@
     --cyan: #00F2FE;
     --purple: #9D4EDD;
   }
-  html { background: #080C14; }
+  html { background: #080C14; color-scheme: dark; }
   body {
     background-color: #080C14;
     background-image:
@@ -61,19 +63,56 @@
     backdrop-filter: blur(16px);
   }
 
+  /* Scroll progress bar */
+  #scrollProgress {
+    position: fixed; top: 0; left: 0; height: 3px; width: 0%;
+    background: linear-gradient(90deg, #00F2FE, #9D4EDD);
+    z-index: 60; transition: width .1s linear;
+  }
+
+  /* Header scroll state */
+  header .nav-shell { transition: background .35s ease, border-color .35s ease, box-shadow .35s ease, padding .35s ease; }
+  header.scrolled .nav-shell {
+    background: rgba(8, 12, 20, 0.85);
+    box-shadow: 0 8px 30px -12px rgba(0,0,0,0.6);
+  }
+
+  /* Nav active underline */
+  .nav-link { position: relative; }
+  .nav-link::after {
+    content: ''; position: absolute; left: 0; bottom: -6px; height: 1px; width: 0%;
+    background: linear-gradient(90deg, #00F2FE, #9D4EDD); transition: width .3s ease;
+  }
+  .nav-link:hover::after, .nav-link.active::after { width: 100%; }
+  .nav-link.active { color: #fff; }
+
   .grad-text-cyan-purple {
     background: linear-gradient(90deg, #00F2FE 0%, #3B82F6 40%, #9D4EDD 100%);
+    background-size: 200% auto;
     -webkit-background-clip: text;
     background-clip: text;
     color: transparent;
+    animation: shimmer 6s ease-in-out infinite;
+  }
+  @keyframes shimmer {
+    0%, 100% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
   }
 
   .btn-primary {
+    position: relative;
+    overflow: hidden;
     background: linear-gradient(90deg, #00F2FE 0%, #8B5CF6 100%);
     color: #000000;
     font-weight: 600;
     transition: all .25s ease;
   }
+  .btn-primary::before {
+    content: ''; position: absolute; inset: 0; translate: -120% 0;
+    background: linear-gradient(115deg, transparent 20%, rgba(255,255,255,0.55) 50%, transparent 80%);
+    transition: translate .6s ease;
+  }
+  .btn-primary:hover::before { translate: 120% 0; }
   .btn-primary:hover {
     transform: translateY(-1px);
     box-shadow: 0 0 25px rgba(0, 242, 254, 0.4);
@@ -88,10 +127,20 @@
   .btn-outline-cyan:hover {
     border-color: #00F2FE;
     background: rgba(0, 242, 254, 0.1);
+    transform: translateY(-1px);
   }
 
   .card-hover { transition: transform .3s ease, border-color .3s ease, box-shadow .3s ease; }
   .card-hover:hover { transform: translateY(-4px); border-color: rgba(0,242,254,0.35); box-shadow: 0 0 0 1px rgba(0,242,254,0.18), 0 20px 40px -20px rgba(0,242,254,0.35); }
+
+  /* Ambient background orbs */
+  .orb { position: absolute; border-radius: 9999px; filter: blur(90px); pointer-events: none; opacity: .35; animation: drift 16s ease-in-out infinite; }
+  .orb-cyan { background: radial-gradient(circle, rgba(0,242,254,0.55), transparent 70%); }
+  .orb-purple { background: radial-gradient(circle, rgba(157,78,221,0.55), transparent 70%); animation-delay: -8s; }
+  @keyframes drift {
+    0%, 100% { transform: translate(0, 0) scale(1); }
+    50% { transform: translate(30px, -24px) scale(1.08); }
+  }
 
   /* Animated Node Card Styles */
   .node-card {
@@ -115,37 +164,93 @@
   .reveal { opacity:0; transform: translateY(18px); transition: opacity .7s ease, transform .7s ease; }
   .reveal.in { opacity:1; transform: translateY(0); }
 
+  /* Timeline travelling dot */
+  .line-dot {
+    position: absolute; top: -3px; height: 7px; width: 7px; border-radius: 9999px;
+    background: #fff; box-shadow: 0 0 12px 2px rgba(0,242,254,0.8);
+    animation: travel 4s ease-in-out infinite;
+  }
+  @keyframes travel {
+    0% { left: 0%; opacity: 0; }
+    10% { opacity: 1; }
+    90% { opacity: 1; }
+    100% { left: 100%; opacity: 0; }
+  }
+
+  /* Ticker */
+  .ticker-wrap {
+    -webkit-mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent);
+    mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent);
+  }
   .ticker-track { animation: ticker 28s linear infinite; }
+  .ticker-wrap:hover .ticker-track { animation-play-state: paused; }
   @keyframes ticker { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+
+  /* Pulsing glow frame for contact widget */
+  .glow-frame { position: relative; }
+  .glow-frame::before {
+    content: ''; position: absolute; inset: -1px; border-radius: 1rem; padding: 1px;
+    background: linear-gradient(120deg, rgba(0,242,254,0.5), rgba(157,78,221,0.5), rgba(0,242,254,0.5));
+    background-size: 200% 200%;
+    -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    -webkit-mask-composite: xor; mask-composite: exclude;
+    animation: shimmer 5s ease-in-out infinite;
+    pointer-events: none;
+  }
+
+  /* Why Choose section blob */
+  .why-blob {
+    position: absolute; border-radius: 9999px; filter: blur(70px); pointer-events: none; opacity: .3;
+  }
+
+  /* Contact tabs */
+  .contact-tab {
+    color: rgba(231,236,243,0.55);
+    background: transparent;
+  }
+  .contact-tab:hover { color: rgba(231,236,243,0.85); background: rgba(255,255,255,0.03); }
+  .contact-tab.active {
+    color: #000;
+    background: linear-gradient(90deg, #00F2FE 0%, #8B5CF6 100%);
+    box-shadow: 0 0 20px rgba(0,242,254,0.25);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .orb, .grad-text-cyan-purple, .line-dot, .glow-frame::before, .ticker-track { animation: none !important; }
+    .reveal { transition: none !important; opacity: 1 !important; transform: none !important; }
+  }
 </style>
 </head>
 
 <body class="antialiased">
 
+<!-- Scroll Progress -->
+<div id="scrollProgress"></div>
+
 <!-- ============ HEADER / NAV ============ -->
-<header class="fixed top-0 inset-x-0 z-50">
+<header id="siteHeader" class="fixed top-0 inset-x-0 z-50">
   <div class="mx-auto max-w-7xl px-6 lg:px-8">
-    <div class="mt-4 glass rounded-2xl px-5 py-3 flex items-center justify-between">
-      <a href="#top" class="flex items-center gap-3 font-display font-extrabold tracking-tight text-lg">
+    <div class="nav-shell mt-4 glass rounded-2xl px-5 py-3 flex items-center justify-between">
+      <a href="#top" class="flex items-center gap-3 font-display font-extrabold tracking-tight text-lg whitespace-nowrap shrink-0">
         <span>JOE <span class="grad-text-cyan-purple">[AUTOMATED]</span></span>
-        <span class="hidden sm:inline-flex items-center gap-1.5 rounded-full border border-white/10 bg-white/5 px-2.5 py-1 text-[11px] font-body font-medium text-emerald-300">
-          <span class="h-1.5 w-1.5 rounded-full bg-emerald-400"></span>
-          Available for Projects
+        <span class="hidden lg:inline-flex items-center gap-1.5 rounded-full border border-white/10 bg-white/5 px-2.5 py-1 text-[11px] font-body font-medium text-emerald-300 whitespace-nowrap">
+          <span class="h-1.5 w-1.5 rounded-full bg-emerald-400 animate-pulse"></span>
+          Available for Projects ✅
         </span>
       </a>
 
-      <nav class="hidden md:flex items-center gap-8 font-body text-sm text-white/70">
-        <a href="#services" class="hover:text-white transition-colors">Services</a>
-        <a href="#workflows" class="hover:text-white transition-colors">Workflows</a>
-        <a href="#stack" class="hover:text-white transition-colors">Tech Stack</a>
-        <a href="#case-studies" class="hover:text-white transition-colors">Case Studies</a>
+      <nav class="hidden lg:flex items-center gap-8 font-body text-sm text-white/70">
+        <a href="#why-choose" data-nav-link class="nav-link hover:text-white transition-colors">Why Us</a>
+        <a href="#services" data-nav-link class="nav-link hover:text-white transition-colors">Services</a>
+        <a href="#workflows" data-nav-link class="nav-link hover:text-white transition-colors">Workflows</a>
+        <a href="#case-studies" data-nav-link class="nav-link hover:text-white transition-colors">Case Studies</a>
       </nav>
 
       <div class="flex items-center gap-3">
-        <a href="#contact" class="hidden sm:inline-flex btn-primary rounded-xl px-4 py-2 text-sm">Book a Strategy Call</a>
+        <a href="#contact" class="hidden lg:inline-flex whitespace-nowrap btn-primary rounded-xl px-4 py-2 text-sm">📅 Book a Strategy Call</a>
 
         <!-- Hamburger Button (mobile only) -->
-        <button id="menuBtn" type="button" aria-label="Toggle menu" aria-expanded="false" aria-controls="mobileMenu" class="md:hidden relative h-10 w-10 flex items-center justify-center rounded-xl border border-white/10 bg-white/5">
+        <button id="menuBtn" type="button" aria-label="Toggle menu" aria-expanded="false" aria-controls="mobileMenu" class="lg:hidden relative h-10 w-10 flex items-center justify-center rounded-xl border border-white/10 bg-white/5">
           <span class="sr-only">Toggle menu</span>
           <div class="w-5 flex flex-col gap-[5px]">
             <span class="menu-bar block h-[2px] w-full bg-white rounded-full transition-transform duration-300"></span>
@@ -157,19 +262,21 @@
     </div>
 
     <!-- Mobile Menu Panel -->
-    <nav id="mobileMenu" class="md:hidden hidden mt-2 glass rounded-2xl px-5 py-4 flex flex-col gap-4 font-body text-sm text-white/70">
+    <nav id="mobileMenu" class="lg:hidden hidden mt-2 glass rounded-2xl px-5 py-4 flex flex-col gap-4 font-body text-sm text-white/70">
+      <a href="#why-choose" class="mobile-link hover:text-white transition-colors">Why Us</a>
       <a href="#services" class="mobile-link hover:text-white transition-colors">Services</a>
       <a href="#workflows" class="mobile-link hover:text-white transition-colors">Workflows</a>
-      <a href="#stack" class="mobile-link hover:text-white transition-colors">Tech Stack</a>
       <a href="#case-studies" class="mobile-link hover:text-white transition-colors">Case Studies</a>
-      <a href="#contact" class="mobile-link btn-primary rounded-xl px-4 py-2 text-sm text-center">Book a Strategy Call</a>
+      <a href="#contact" class="mobile-link btn-primary rounded-xl px-4 py-2 text-sm text-center">📅 Book a Strategy Call</a>
     </nav>
   </div>
 </header>
 
 <!-- ============ HERO SECTION ============ -->
 <section id="top" class="relative pt-36 pb-20 lg:pt-44 lg:pb-28 px-6 lg:px-8 overflow-hidden">
-  <div class="mx-auto max-w-7xl grid lg:grid-cols-12 gap-12 items-center">
+  <div class="orb orb-cyan z-0 w-72 h-72 -top-10 -left-10" aria-hidden="true"></div>
+  <div class="orb orb-purple z-0 w-80 h-80 top-1/3 right-0" aria-hidden="true"></div>
+  <div class="relative z-10 mx-auto max-w-7xl grid lg:grid-cols-12 gap-12 items-center">
 
     <!-- Left Content -->
     <div class="lg:col-span-6">
@@ -182,15 +289,16 @@
       </p>
 
       <div class="mt-8 flex flex-wrap items-center gap-4">
-        <a href="#contact" class="btn-primary rounded-full px-7 py-3 text-sm font-semibold">Book a Call</a>
-        <a href="#workflows" class="btn-outline-cyan rounded-full px-7 py-3 text-sm font-medium">Explore Live Workflows</a>
+        <a href="#contact" class="btn-primary rounded-full px-7 py-3 text-sm font-semibold">📅 Book a Call</a>
+        <a href="#workflows" class="btn-outline-cyan rounded-full px-7 py-3 text-sm font-medium">👀 Explore Live Workflows</a>
       </div>
     </div>
 
     <!-- Right Hero Execution Card -->
     <div class="lg:col-span-6 reveal" data-reveal>
-      <div class="bg-[#090D16] border border-cyan/20 rounded-2xl p-6 sm:p-7 relative shadow-[0_0_50px_-12px_rgba(0,242,254,0.15)]">
-        
+      <div id="execCard" class="bg-[#090D16] border border-cyan/20 rounded-2xl p-6 sm:p-7 relative shadow-[0_0_50px_-12px_rgba(0,242,254,0.15)] overflow-hidden transition-transform duration-300">
+        <div id="execSpotlight" class="pointer-events-none absolute inset-0 opacity-0 transition-opacity duration-300" style="background: radial-gradient(300px circle at var(--x,50%) var(--y,50%), rgba(0,242,254,0.08), transparent 70%);"></div>
+
         <div class="flex items-center justify-between pb-6 border-b border-white/5 font-mono text-xs">
           <span class="text-white/40 tracking-wider">workflow_execution.live</span>
           <span class="inline-flex items-center gap-2 text-emerald-400">
@@ -254,41 +362,267 @@
 <section class="border-y border-white/[0.06] bg-white/[0.01] px-6 lg:px-8 py-10">
   <div class="mx-auto max-w-7xl grid grid-cols-1 sm:grid-cols-3 gap-8 text-center">
     <div class="reveal" data-reveal>
-      <p class="font-display font-extrabold text-3xl lg:text-4xl grad-text-cyan-purple">100+ hrs</p>
-      <p class="mt-2 text-sm text-white/60">saved per month, per client</p>
+      <p class="font-display font-extrabold text-3xl lg:text-4xl grad-text-cyan-purple"><span data-count-to="100">0</span>+ hrs</p>
+      <p class="mt-2 text-sm text-white/60">⏱️ saved per month, per client</p>
     </div>
     <div class="reveal" data-reveal>
-      <p class="font-display font-extrabold text-3xl lg:text-4xl grad-text-cyan-purple">99.9%</p>
-      <p class="mt-2 text-sm text-white/60">pipeline reliability</p>
+      <p class="font-display font-extrabold text-3xl lg:text-4xl grad-text-cyan-purple"><span data-count-to="99.9" data-decimals="1">0</span>%</p>
+      <p class="mt-2 text-sm text-white/60">🛡️ pipeline reliability</p>
     </div>
     <div class="reveal" data-reveal>
       <p class="font-display font-extrabold text-3xl lg:text-4xl grad-text-cyan-purple">Custom</p>
-      <p class="mt-2 text-sm text-white/60">AI agents &amp; RAG architecture</p>
+      <p class="mt-2 text-sm text-white/60">🤖 AI agents &amp; RAG architecture</p>
     </div>
   </div>
 </section>
 
-<!-- ============ SERVICES ============ -->
-<section id="services" class="px-6 lg:px-8 py-24">
+<!-- ============ WHY AUTOMATE / BENEFITS ============ -->
+<section class="px-6 lg:px-8 py-24">
   <div class="mx-auto max-w-7xl">
     <div class="max-w-2xl reveal" data-reveal>
-      <p class="font-mono text-xs tracking-[0.25em] uppercase text-cyan mb-4">Services</p>
+      <p class="font-mono text-xs tracking-[0.25em] uppercase text-cyan mb-4">💡 Why Joe Automates</p>
+      <h2 class="font-display font-extrabold text-3xl lg:text-4xl tracking-tight text-white">The payoff, beyond saved time.</h2>
+    </div>
+
+    <div class="mt-12 grid md:grid-cols-3 gap-6">
+      <div class="glass card-hover rounded-2xl p-7 reveal" data-reveal>
+        <div class="flex items-center gap-4 mb-4">
+          <div class="h-11 w-11 shrink-0 rounded-xl bg-cyan/10 border border-cyan/30 flex items-center justify-center text-cyan">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 3"/></svg>
+          </div>
+          <h3 class="font-display font-bold text-lg text-white">Time Savings</h3>
+        </div>
+        <p class="text-sm text-white/60 leading-relaxed">Reclaim hundreds of work hours by automating repetitive tasks. Our clients typically save 20+ hours per week per automated process.</p>
+      </div>
+
+      <div class="glass card-hover rounded-2xl p-7 reveal" data-reveal>
+        <div class="flex items-center gap-4 mb-4">
+          <div class="h-11 w-11 shrink-0 rounded-xl bg-purple/10 border border-purple/30 flex items-center justify-center text-purple">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v10M9 9.5c0-1.4 1.34-2.5 3-2.5s3 1.1 3 2.5-1.34 2.5-3 2.5-3 1.1-3 2.5 1.34 2.5 3 2.5 3-1.1 3-2.5"/></svg>
+          </div>
+          <h3 class="font-display font-bold text-lg text-white">Cost Efficiency</h3>
+        </div>
+        <p class="text-sm text-white/60 leading-relaxed">Reduce operational costs by up to 70% with intelligent automation that never takes a break.</p>
+      </div>
+
+      <div class="glass card-hover rounded-2xl p-7 reveal" data-reveal>
+        <div class="flex items-center gap-4 mb-4">
+          <div class="h-11 w-11 shrink-0 rounded-xl bg-cyan/10 border border-cyan/30 flex items-center justify-center text-cyan">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 17l6-6 4 4 8-8"/><path d="M15 7h6v6"/></svg>
+          </div>
+          <h3 class="font-display font-bold text-lg text-white">Competitive Edge</h3>
+        </div>
+        <p class="text-sm text-white/60 leading-relaxed">Stay ahead of your competition with AI-powered processes that optimize your business 24/7.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ WHY CHOOSE JOE AUTOMATED ============ -->
+<section id="why-choose" class="relative px-6 lg:px-8 py-24 border-t border-white/[0.06] overflow-hidden">
+  <div class="why-blob orb-cyan w-[28rem] h-[28rem] -left-32 top-0" aria-hidden="true"></div>
+  <div class="why-blob orb-purple w-[28rem] h-[28rem] -right-24 bottom-0" aria-hidden="true"></div>
+
+  <div class="relative z-10 mx-auto max-w-7xl grid lg:grid-cols-12 gap-16 items-center">
+
+    <!-- Illustration -->
+    <div class="lg:col-span-5 reveal" data-reveal>
+      <div class="relative mx-auto max-w-md aspect-square flex items-center justify-center">
+        <svg viewBox="0 0 440 440" xmlns="http://www.w3.org/2000/svg" class="w-full h-auto drop-shadow-[0_20px_60px_rgba(0,242,254,0.18)]">
+          <defs>
+            <radialGradient id="coreGlow" cx="50%" cy="50%" r="50%">
+              <stop offset="0%" stop-color="#00F2FE" stop-opacity="0.35"/>
+              <stop offset="100%" stop-color="#00F2FE" stop-opacity="0"/>
+            </radialGradient>
+            <linearGradient id="ringGrad" x1="0" y1="0" x2="1" y2="1">
+              <stop offset="0%" stop-color="#00F2FE"/>
+              <stop offset="100%" stop-color="#9D4EDD"/>
+            </linearGradient>
+            <linearGradient id="nodeFill" x1="0" y1="0" x2="1" y2="1">
+              <stop offset="0%" stop-color="#161D2E"/>
+              <stop offset="100%" stop-color="#0D121F"/>
+            </linearGradient>
+          </defs>
+
+          <!-- ambient glow -->
+          <circle cx="220" cy="220" r="170" fill="url(#coreGlow)"/>
+
+          <!-- outer dashed orbit -->
+          <circle cx="220" cy="220" r="168" fill="none" stroke="rgba(255,255,255,0.08)" stroke-width="1" stroke-dasharray="2 6"/>
+
+          <!-- rotating gradient ring -->
+          <g transform-origin="220 220">
+            <circle cx="220" cy="220" r="128" fill="none" stroke="url(#ringGrad)" stroke-opacity="0.45" stroke-width="1.5" stroke-dasharray="6 10"/>
+            <animateTransform attributeName="transform" type="rotate" from="0 220 220" to="360 220 220" dur="24s" repeatCount="indefinite"/>
+          </g>
+          <g transform-origin="220 220">
+            <circle cx="220" cy="220" r="98" fill="none" stroke="#9D4EDD" stroke-opacity="0.3" stroke-width="1" stroke-dasharray="1 5"/>
+            <animateTransform attributeName="transform" type="rotate" from="360 220 220" to="0 220 220" dur="18s" repeatCount="indefinite"/>
+          </g>
+
+          <!-- connecting lines from core to satellite nodes -->
+          <g stroke="rgba(255,255,255,0.12)" stroke-width="1.2">
+            <line x1="220" y1="220" x2="220" y2="72"/>
+            <line x1="220" y1="220" x2="356" y2="150"/>
+            <line x1="220" y1="220" x2="356" y2="296"/>
+            <line x1="220" y1="220" x2="220" y2="372"/>
+            <line x1="220" y1="220" x2="84" y2="296"/>
+            <line x1="220" y1="220" x2="84" y2="150"/>
+          </g>
+
+          <!-- travelling pulses along the connecting lines -->
+          <circle r="3" fill="#00F2FE">
+            <animateMotion dur="2.6s" repeatCount="indefinite" path="M220,220 L220,72"/>
+            <animate attributeName="opacity" values="0;1;0" dur="2.6s" repeatCount="indefinite"/>
+          </circle>
+          <circle r="3" fill="#9D4EDD">
+            <animateMotion dur="3.1s" repeatCount="indefinite" path="M220,220 L356,296"/>
+            <animate attributeName="opacity" values="0;1;0" dur="3.1s" repeatCount="indefinite"/>
+          </circle>
+          <circle r="3" fill="#00F2FE">
+            <animateMotion dur="2.9s" repeatCount="indefinite" path="M220,220 L84,150"/>
+            <animate attributeName="opacity" values="0;1;0" dur="2.9s" repeatCount="indefinite"/>
+          </circle>
+
+          <!-- central agent core -->
+          <g transform="translate(220,220)">
+            <circle r="46" fill="url(#nodeFill)" stroke="url(#ringGrad)" stroke-width="1.5"/>
+            <circle r="46" fill="none" stroke="#00F2FE" stroke-opacity="0.25" stroke-width="8"/>
+            <g fill="none" stroke="#00F2FE" stroke-width="2.2" stroke-linecap="round">
+              <path d="M-14 -4 L-4 6 L16 -14"/>
+            </g>
+            <circle r="46" fill="none" stroke="#fff" stroke-opacity="0.06" stroke-width="1"/>
+          </g>
+          <text x="220" y="286" text-anchor="middle" fill="#E7ECF3" font-size="11" letter-spacing="2" font-family="JetBrains Mono, monospace" opacity="0.7">AGENT CORE</text>
+
+          <!-- satellite nodes -->
+          <g font-family="JetBrains Mono, monospace">
+            <!-- top -->
+            <g transform="translate(220,72)">
+              <rect x="-52" y="-16" width="104" height="32" rx="8" fill="url(#nodeFill)" stroke="#00F2FE" stroke-opacity="0.5"/>
+              <circle cx="-36" cy="0" r="4" fill="#00F2FE"/>
+              <text x="-24" y="4" fill="#E7ECF3" font-size="10">Trigger</text>
+            </g>
+            <!-- top right -->
+            <g transform="translate(356,150)">
+              <rect x="-50" y="-16" width="100" height="32" rx="8" fill="url(#nodeFill)" stroke="#9D4EDD" stroke-opacity="0.5"/>
+              <circle cx="-34" cy="0" r="4" fill="#9D4EDD"/>
+              <text x="-22" y="4" fill="#E7ECF3" font-size="10">LLM</text>
+            </g>
+            <!-- bottom right -->
+            <g transform="translate(356,296)">
+              <rect x="-50" y="-16" width="100" height="32" rx="8" fill="url(#nodeFill)" stroke="#00F2FE" stroke-opacity="0.5"/>
+              <circle cx="-34" cy="0" r="4" fill="#00F2FE"/>
+              <text x="-22" y="4" fill="#E7ECF3" font-size="10">CRM</text>
+            </g>
+            <!-- bottom -->
+            <g transform="translate(220,372)">
+              <rect x="-48" y="-16" width="96" height="32" rx="8" fill="url(#nodeFill)" stroke="#9D4EDD" stroke-opacity="0.5"/>
+              <circle cx="-32" cy="0" r="4" fill="#9D4EDD"/>
+              <text x="-20" y="4" fill="#E7ECF3" font-size="10">Slack</text>
+            </g>
+            <!-- bottom left -->
+            <g transform="translate(84,296)">
+              <rect x="-50" y="-16" width="100" height="32" rx="8" fill="url(#nodeFill)" stroke="#00F2FE" stroke-opacity="0.5"/>
+              <circle cx="-34" cy="0" r="4" fill="#00F2FE"/>
+              <text x="-22" y="4" fill="#E7ECF3" font-size="10">API</text>
+            </g>
+            <!-- top left -->
+            <g transform="translate(84,150)">
+              <rect x="-52" y="-16" width="104" height="32" rx="8" fill="url(#nodeFill)" stroke="#9D4EDD" stroke-opacity="0.5"/>
+              <circle cx="-36" cy="0" r="4" fill="#9D4EDD"/>
+              <text x="-24" y="4" fill="#E7ECF3" font-size="10">Data</text>
+            </g>
+          </g>
+        </svg>
+      </div>
+    </div>
+
+    <!-- Text content -->
+    <div class="lg:col-span-7">
+      <p class="font-mono text-xs tracking-[0.25em] uppercase text-purple mb-4 reveal" data-reveal>🤝 Why Choose Joe [Automated]</p>
+      <h2 class="font-display font-extrabold text-3xl lg:text-4xl tracking-tight text-white reveal" data-reveal>
+        Not just another automation shop.
+      </h2>
+      <p class="mt-4 text-white/60 max-w-xl leading-relaxed reveal" data-reveal>
+        I'm a hands-on partner in transforming how your business runs — not a ticket queue and not a template library.
+      </p>
+
+      <div class="mt-6 flex flex-wrap gap-3 reveal" data-reveal>
+        <span class="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-3 py-1.5 text-xs font-mono text-white/60">
+          <span class="h-1.5 w-1.5 rounded-full bg-cyan"></span> Direct access, no account managers
+        </span>
+        <span class="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-3 py-1.5 text-xs font-mono text-white/60">
+          <span class="h-1.5 w-1.5 rounded-full bg-purple"></span> Built &amp; tested in production
+        </span>
+      </div>
+
+      <div class="mt-10 space-y-8">
+        <div class="flex items-start gap-4 reveal" data-reveal>
+          <div class="h-11 w-11 shrink-0 rounded-xl bg-cyan/10 border border-cyan/30 flex items-center justify-center text-cyan">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M9 12l2 2 4-4"/><circle cx="12" cy="12" r="9"/></svg>
+          </div>
+          <div>
+            <h3 class="font-display font-bold text-lg text-white">Real-World Experience</h3>
+            <p class="mt-1.5 text-sm text-white/60 leading-relaxed">Every system I build is grounded in real production use cases, not theoretical demos — solving the operational problems businesses actually run into.</p>
+          </div>
+        </div>
+
+        <div class="flex items-start gap-4 reveal" data-reveal>
+          <div class="h-11 w-11 shrink-0 rounded-xl bg-purple/10 border border-purple/30 flex items-center justify-center text-purple">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2 3 14h7l-1 8 10-12h-7l1-8Z"/></svg>
+          </div>
+          <div>
+            <h3 class="font-display font-bold text-lg text-white">Fast Implementation</h3>
+            <p class="mt-1.5 text-sm text-white/60 leading-relaxed">I use the same n8n and API-driven automations I build for clients to run my own process — which means projects ship faster than with a traditional agency.</p>
+          </div>
+        </div>
+
+        <div class="flex items-start gap-4 reveal" data-reveal>
+          <div class="h-11 w-11 shrink-0 rounded-xl bg-cyan/10 border border-cyan/30 flex items-center justify-center text-cyan">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H7a4 4 0 0 0-4 4v2"/><circle cx="10" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+          </div>
+          <div>
+            <h3 class="font-display font-bold text-lg text-white">A Dedicated Partner, Not a Vendor</h3>
+            <p class="mt-1.5 text-sm text-white/60 leading-relaxed">You get direct access to the person building your system — clear communication, honest scoping, and support that continues after launch.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ============ SERVICES ============ -->
+<section id="services" class="px-6 lg:px-8 py-24 border-t border-white/[0.06]">
+  <div class="mx-auto max-w-7xl">
+    <div class="max-w-2xl reveal" data-reveal>
+      <p class="font-mono text-xs tracking-[0.25em] uppercase text-cyan mb-4">🛠️ Services</p>
       <h2 class="font-display font-extrabold text-3xl lg:text-4xl tracking-tight text-white">Built to remove friction, not add features.</h2>
       <p class="mt-4 text-white/60">Every engagement starts with the same question: what is slowing your team down, and what would it look like running itself?</p>
     </div>
 
     <div class="mt-12 grid md:grid-cols-3 gap-6">
-      <div class="glass card-hover rounded-2xl p-7">
+      <div class="glass card-hover rounded-2xl p-7 reveal" data-reveal>
+        <div class="h-11 w-11 rounded-xl bg-cyan/10 border border-cyan/30 flex items-center justify-center text-cyan mb-5">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a4 4 0 0 1 4 4v1a4 4 0 0 1-8 0V6a4 4 0 0 1 4-4Z"/><path d="M6 21v-2a4 4 0 0 1 4-4h4a4 4 0 0 1 4 4v2"/><circle cx="12" cy="7" r="1"/></svg>
+        </div>
         <h3 class="font-display font-bold text-lg text-white">Custom AI Agents &amp; LLM Integration</h3>
         <p class="mt-3 text-sm text-white/60 leading-relaxed">Decision-making agents built on retrieval-augmented generation and vector databases — connected directly to OpenAI and Anthropic models.</p>
       </div>
 
-      <div class="glass card-hover rounded-2xl p-7">
+      <div class="glass card-hover rounded-2xl p-7 reveal" data-reveal>
+        <div class="h-11 w-11 rounded-xl bg-purple/10 border border-purple/30 flex items-center justify-center text-purple mb-5">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12a9 9 0 1 0 9-9"/><path d="M3 3v6h6"/><path d="M12 7v5l3 3"/></svg>
+        </div>
         <h3 class="font-display font-bold text-lg text-white">Workflow &amp; System Orchestration</h3>
         <p class="mt-3 text-sm text-white/60 leading-relaxed">n8n-driven pipelines that sync your apps, handle webhooks, and recover gracefully from errors — so nothing silently fails.</p>
       </div>
 
-      <div class="glass card-hover rounded-2xl p-7">
+      <div class="glass card-hover rounded-2xl p-7 reveal" data-reveal>
+        <div class="h-11 w-11 rounded-xl bg-cyan/10 border border-cyan/30 flex items-center justify-center text-cyan mb-5">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><ellipse cx="12" cy="5" rx="8" ry="3"/><path d="M4 5v14c0 1.66 3.58 3 8 3s8-1.34 8-3V5"/><path d="M4 12c0 1.66 3.58 3 8 3s8-1.34 8-3"/></svg>
+        </div>
         <h3 class="font-display font-bold text-lg text-white">Content &amp; Data Pipelines</h3>
         <p class="mt-3 text-sm text-white/60 leading-relaxed">Automated media processing, structured data extraction, and short-form video pipelines built for scale.</p>
       </div>
@@ -300,14 +634,16 @@
 <section id="workflows" class="px-6 lg:px-8 py-24 border-t border-white/[0.06]">
   <div class="mx-auto max-w-7xl">
     <div class="mb-16 reveal" data-reveal>
-      <p class="font-mono text-xs tracking-[0.2em] uppercase text-cyan mb-3">HOW IT WORKS</p>
+      <p class="font-mono text-xs tracking-[0.2em] uppercase text-cyan mb-3">⚙️ HOW IT WORKS</p>
       <h2 class="font-display font-extrabold text-3xl sm:text-4xl lg:text-5xl text-white tracking-tight">
         From friction to fully automated, in<br class="hidden sm:inline"> three moves.
       </h2>
     </div>
 
     <div class="relative grid md:grid-cols-3 gap-10 md:gap-8">
-      <div class="hidden md:block absolute top-[28px] left-[10%] right-[10%] h-px bg-gradient-to-r from-cyan/40 via-purple/40 to-cyan/40 z-0"></div>
+      <div class="hidden md:block absolute top-[28px] left-[10%] right-[10%] h-px bg-gradient-to-r from-cyan/40 via-purple/40 to-cyan/40 z-0">
+        <span class="line-dot"></span>
+      </div>
 
       <div class="relative z-10 reveal" data-reveal>
         <div class="w-14 h-14 rounded-full border border-cyan/50 bg-[#080C14] flex items-center justify-center font-mono text-cyan text-sm font-bold shadow-[0_0_15px_rgba(0,242,254,0.2)] mb-6">
@@ -345,9 +681,9 @@
 <!-- ============ TECH STACK ============ -->
 <section id="stack" class="px-6 lg:px-8 py-20 border-t border-white/[0.06] overflow-hidden">
   <div class="mx-auto max-w-7xl">
-    <p class="font-mono text-xs tracking-[0.25em] uppercase text-white/40 mb-8 text-center">Tech Stack &amp; Infrastructure</p>
+    <p class="font-mono text-xs tracking-[0.25em] uppercase text-white/40 mb-8 text-center">💻 Tech Stack &amp; Infrastructure</p>
   </div>
-  <div class="relative">
+  <div class="relative ticker-wrap">
     <div class="flex ticker-track w-max gap-4 px-4">
       <template id="stackTemplate"></template>
     </div>
@@ -358,28 +694,28 @@
 <section id="case-studies" class="px-6 lg:px-8 py-24 border-t border-white/[0.06]">
   <div class="mx-auto max-w-7xl">
     <div class="max-w-2xl reveal" data-reveal>
-      <p class="font-mono text-xs tracking-[0.25em] uppercase text-purple mb-4">Case Studies</p>
+      <p class="font-mono text-xs tracking-[0.25em] uppercase text-purple mb-4">📊 Case Studies</p>
       <h2 class="font-display font-extrabold text-3xl lg:text-4xl tracking-tight text-white">Systems currently running in production.</h2>
     </div>
 
     <div class="mt-12 grid md:grid-cols-3 gap-6">
       <div class="glass card-hover rounded-2xl overflow-hidden reveal" data-reveal>
         <div class="p-6">
-          <span class="font-mono text-[11px] text-cyan block mb-2">RAG &middot; CUSTOMER SUPPORT</span>
+          <span class="font-mono text-[11px] text-cyan block mb-2">🤖 RAG &middot; CUSTOMER SUPPORT</span>
           <h3 class="font-display font-bold text-lg text-white">AI-Powered Customer Support Agent</h3>
           <p class="mt-2 text-sm text-white/60">Retrieval-augmented agent trained on internal docs, resolving 85% of tier-1 tickets without a human.</p>
         </div>
       </div>
       <div class="glass card-hover rounded-2xl overflow-hidden reveal" data-reveal>
         <div class="p-6">
-          <span class="font-mono text-[11px] text-purple block mb-2">MEDIA &middot; ANALYTICS</span>
+          <span class="font-mono text-[11px] text-purple block mb-2">🎬 MEDIA &middot; ANALYTICS</span>
           <h3 class="font-display font-bold text-lg text-white">Short-Form Video &amp; Analytics Pipeline</h3>
           <p class="mt-2 text-sm text-white/60">Automated clipping, captioning, and cross-platform posting with performance tracked back to source.</p>
         </div>
       </div>
       <div class="glass card-hover rounded-2xl overflow-hidden reveal" data-reveal>
         <div class="p-6">
-          <span class="font-mono text-[11px] text-cyan block mb-2">CRM &middot; WEBHOOK SYNC</span>
+          <span class="font-mono text-[11px] text-cyan block mb-2">🔗 CRM &middot; WEBHOOK SYNC</span>
           <h3 class="font-display font-bold text-lg text-white">Enterprise CRM &amp; Webhook Sync</h3>
           <p class="mt-2 text-sm text-white/60">Bi-directional sync across business systems with error-handling logic and full audit logging.</p>
         </div>
@@ -388,34 +724,127 @@
   </div>
 </section>
 
-<!-- ============ FINAL CTA & CALENDLY INTEGRATION WINDOW ============ -->
-<section id="contact" class="px-6 lg:px-8 py-24 border-t border-white/[0.06]">
-  <div class="mx-auto max-w-5xl text-center">
-    
-    <p class="font-mono text-xs tracking-[0.2em] uppercase text-purple mb-3">LET'S BUILD</p>
-    
-    <h2 class="font-display font-extrabold text-3xl sm:text-5xl text-white tracking-tight">
-      Ready to automate your business?
-    </h2>
-    
-    <p class="mt-4 text-white/60 text-sm sm:text-base max-w-2xl mx-auto leading-relaxed">
-      Book a free 30-minute discovery call. We'll map your current workflow and scope what an automated version looks like — no obligation.
-    </p>
+<!-- ============ FINAL CTA & CONTACT ============ -->
+<section id="contact" class="relative px-6 lg:px-8 py-24 border-t border-white/[0.06] overflow-hidden">
+  <div class="why-blob orb-cyan w-[26rem] h-[26rem] -left-40 top-1/2 -translate-y-1/2" aria-hidden="true"></div>
+  <div class="why-blob orb-purple w-[26rem] h-[26rem] -right-40 top-1/2 -translate-y-1/2" aria-hidden="true"></div>
 
-    <div class="mt-6 flex flex-wrap items-center justify-center gap-4 mb-12">
-      <a href="#contact" class="btn-primary rounded-full px-7 py-3 text-sm font-semibold">
-        Build Your Agent
-      </a>
-      <a href="mailto:hello@joeautomated.dev" class="btn-outline-cyan rounded-full px-7 py-3 text-sm font-medium font-mono">
-        hello@joeautomated.dev
-      </a>
+  <div class="relative z-10 mx-auto max-w-6xl">
+
+    <div class="text-center max-w-2xl mx-auto mb-16 reveal" data-reveal>
+      <p class="font-mono text-xs tracking-[0.2em] uppercase text-purple mb-3">🚀 LET'S BUILD</p>
+      <h2 class="font-display font-extrabold text-3xl sm:text-5xl text-white tracking-tight">
+        Let's build something<br class="hidden sm:inline"> <span class="grad-text-cyan-purple">automated</span> together.
+      </h2>
+      <p class="mt-4 text-white/70 text-sm sm:text-base leading-relaxed" style="color: rgba(231,236,243,0.75);">
+        Ready to transform your business with cutting-edge automation? Pick whichever's easier — grab a slot on the calendar or drop your details and I'll get back to you.
+      </p>
     </div>
 
-    <!-- CALENDLY EMBEDDED CONTAINER -->
-    <div class="mx-auto max-w-4xl bg-[#090D16] border border-white/15 rounded-2xl p-2 sm:p-4 shadow-2xl overflow-hidden relative">
-      <div class="calendly-inline-widget w-full rounded-xl" data-url="https://calendly.com/yosev999/30min?background_color=090d16&text_color=e7ecf3&primary_color=00f2fe" style="min-width:320px; height:480px;"></div>
-    </div>
+    <div class="grid lg:grid-cols-12 gap-8 items-start">
 
+      <!-- Left: contact info -->
+      <div class="lg:col-span-4 order-2 lg:order-1 reveal" data-reveal>
+        <div class="glass rounded-2xl p-7 h-full">
+          <h3 class="font-display font-bold text-xl text-white">Prefer to reach out directly?</h3>
+          <p class="mt-2 text-sm text-white/60 leading-relaxed">Whether you're just starting out or scaling existing automation, I've got you covered.</p>
+
+          <div class="mt-8 space-y-6">
+            <a href="mailto:hello@joeautomated.dev" class="flex items-start gap-4 group">
+              <div class="h-11 w-11 shrink-0 rounded-xl bg-cyan/10 border border-cyan/30 flex items-center justify-center text-cyan group-hover:bg-cyan/20 transition-colors">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg>
+              </div>
+              <div>
+                <p class="text-sm font-semibold text-white">Email Us</p>
+                <p class="text-sm text-white/60 font-mono group-hover:text-cyan transition-colors">hello@joeautomated.dev</p>
+              </div>
+            </a>
+
+            <a href="tel:+00000000000" class="flex items-start gap-4 group">
+              <div class="h-11 w-11 shrink-0 rounded-xl bg-purple/10 border border-purple/30 flex items-center justify-center text-purple group-hover:bg-purple/20 transition-colors">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+              </div>
+              <div>
+                <p class="text-sm font-semibold text-white">Call Us</p>
+                <p class="text-sm text-white/60 font-mono group-hover:text-purple transition-colors">Available on request</p>
+              </div>
+            </a>
+
+            <div class="flex items-start gap-4">
+              <div class="h-11 w-11 shrink-0 rounded-xl bg-cyan/10 border border-cyan/30 flex items-center justify-center text-cyan">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 3"/></svg>
+              </div>
+              <div>
+                <p class="text-sm font-semibold text-white">Response Time</p>
+                <p class="text-sm text-white/60">Usually within 24 hours</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="mt-8 pt-6 border-t border-white/5 flex items-center gap-2 text-xs text-emerald-300 font-mono">
+            <span class="h-1.5 w-1.5 rounded-full bg-emerald-400 animate-pulse"></span>
+            Available for new projects
+          </div>
+        </div>
+      </div>
+
+      <!-- Right: tabbed panel -->
+      <div class="lg:col-span-8 order-1 lg:order-2 reveal" data-reveal>
+        <div class="glow-frame bg-[#090D16] border border-white/15 rounded-2xl shadow-2xl overflow-hidden">
+
+          <!-- Tab switcher -->
+          <div class="flex p-2 gap-2 border-b border-white/5">
+            <button type="button" id="tabBookBtn" class="contact-tab flex-1 rounded-xl px-4 py-3 text-sm font-semibold font-body transition-all" data-tab="book">
+              📅 Book a Call
+            </button>
+            <button type="button" id="tabFormBtn" class="contact-tab flex-1 rounded-xl px-4 py-3 text-sm font-semibold font-body transition-all" data-tab="form">
+              ✉️ Send Your Details
+            </button>
+          </div>
+
+          <!-- Book a call panel -->
+          <div id="panelBook" class="p-2 sm:p-4">
+            <div class="calendly-inline-widget w-full rounded-xl" data-url="https://calendly.com/yosev999/30min?background_color=090d16&text_color=e7ecf3&primary_color=00f2fe" style="min-width:320px; height:480px;"></div>
+          </div>
+
+          <!-- Send details panel -->
+          <div id="panelForm" class="p-6 sm:p-8 hidden">
+            <form id="contactForm" class="space-y-5 text-left">
+              <div>
+                <label for="cf-name" class="block text-sm font-semibold text-white/80 mb-2">Name</label>
+                <input id="cf-name" name="name" type="text" required placeholder="Your name"
+                  class="w-full rounded-xl bg-white/[0.04] border border-white/10 px-4 py-3 text-sm text-white placeholder-white/30 focus:outline-none focus:border-cyan/60 focus:ring-2 focus:ring-cyan/20 transition-all">
+              </div>
+
+              <div>
+                <label for="cf-email" class="block text-sm font-semibold text-white/80 mb-2">Email</label>
+                <input id="cf-email" name="email" type="email" required placeholder="your@email.com"
+                  class="w-full rounded-xl bg-white/[0.04] border border-white/10 px-4 py-3 text-sm text-white placeholder-white/30 focus:outline-none focus:border-cyan/60 focus:ring-2 focus:ring-cyan/20 transition-all">
+              </div>
+
+              <div>
+                <label for="cf-phone" class="block text-sm font-semibold text-white/80 mb-2">Phone Number <span class="text-white/30 font-normal">(optional)</span></label>
+                <input id="cf-phone" name="phone" type="tel" placeholder="e.g. +44 1234 567890"
+                  class="w-full rounded-xl bg-white/[0.04] border border-white/10 px-4 py-3 text-sm text-white placeholder-white/30 focus:outline-none focus:border-cyan/60 focus:ring-2 focus:ring-cyan/20 transition-all">
+              </div>
+
+              <div>
+                <label for="cf-message" class="block text-sm font-semibold text-white/80 mb-2">Message</label>
+                <textarea id="cf-message" name="message" rows="4" required placeholder="Tell us about your project"
+                  class="w-full rounded-xl bg-white/[0.04] border border-white/10 px-4 py-3 text-sm text-white placeholder-white/30 focus:outline-none focus:border-cyan/60 focus:ring-2 focus:ring-cyan/20 transition-all resize-none"></textarea>
+              </div>
+
+              <button type="submit" class="btn-primary w-full rounded-xl px-6 py-3.5 text-sm font-semibold">
+                🚀 Send My Details
+              </button>
+              <p id="cf-status" class="text-xs text-center text-white/40 font-mono min-h-[1rem]"></p>
+            </form>
+          </div>
+
+        </div>
+      </div>
+
+    </div>
   </div>
 </section>
 
@@ -429,6 +858,35 @@
 
 <script>
   document.getElementById('year').textContent = new Date().getFullYear();
+
+  // Scroll progress bar + header scrolled state
+  const progressBar = document.getElementById('scrollProgress');
+  const siteHeader = document.getElementById('siteHeader');
+  function onScroll() {
+    const scrollTop = window.scrollY;
+    const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+    const pct = docHeight > 0 ? (scrollTop / docHeight) * 100 : 0;
+    progressBar.style.width = pct + '%';
+    siteHeader.classList.toggle('scrolled', scrollTop > 20);
+  }
+  document.addEventListener('scroll', onScroll, { passive: true });
+  onScroll();
+
+  // Scrollspy: highlight active nav link based on visible section
+  const navLinks = document.querySelectorAll('[data-nav-link]');
+  const spySections = Array.from(navLinks).map(link => document.querySelector(link.getAttribute('href'))).filter(Boolean);
+  const spyObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      const id = '#' + entry.target.id;
+      const link = document.querySelector(`[data-nav-link][href="${id}"]`);
+      if (!link) return;
+      if (entry.isIntersecting) {
+        navLinks.forEach(l => l.classList.remove('active'));
+        link.classList.add('active');
+      }
+    });
+  }, { rootMargin: '-40% 0px -55% 0px', threshold: 0 });
+  spySections.forEach(sec => spyObserver.observe(sec));
 
   // Mobile hamburger menu
   const menuBtn = document.getElementById('menuBtn');
@@ -452,8 +910,15 @@
     link.addEventListener('click', () => setMenuOpen(false));
   });
 
-  // Scroll reveal
+  // Scroll reveal (staggered within each parent group)
+  const revealGroups = new Map();
   const revealEls = document.querySelectorAll('[data-reveal]');
+  revealEls.forEach(el => {
+    const parent = el.parentElement;
+    const idx = revealGroups.get(parent) || 0;
+    el.style.transitionDelay = Math.min(idx * 90, 360) + 'ms';
+    revealGroups.set(parent, idx + 1);
+  });
   const io = new IntersectionObserver((entries) => {
     entries.forEach(entry => {
       if (entry.isIntersecting){
@@ -464,12 +929,65 @@
   }, { threshold: 0.1 });
   revealEls.forEach(el => { io.observe(el); });
 
+  // Count-up numbers in metrics banner
+  const countEls = document.querySelectorAll('[data-count-to]');
+  const countIo = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (!entry.isIntersecting) return;
+      const el = entry.target;
+      const target = parseFloat(el.getAttribute('data-count-to'));
+      const decimals = parseInt(el.getAttribute('data-decimals') || '0', 10);
+      const duration = 1400;
+      const start = performance.now();
+      function step(now) {
+        const progress = Math.min((now - start) / duration, 1);
+        const eased = 1 - Math.pow(1 - progress, 3);
+        el.textContent = (target * eased).toFixed(decimals);
+        if (progress < 1) requestAnimationFrame(step);
+        else el.textContent = target.toFixed(decimals);
+      }
+      requestAnimationFrame(step);
+      countIo.unobserve(el);
+    });
+  }, { threshold: 0.4 });
+  countEls.forEach(el => countIo.observe(el));
+
+  // Mouse-tracked spotlight on hero execution card
+  const execCard = document.getElementById('execCard');
+  const execSpotlight = document.getElementById('execSpotlight');
+  if (execCard && execSpotlight && window.matchMedia('(hover: hover)').matches) {
+    execCard.addEventListener('mousemove', (e) => {
+      const rect = execCard.getBoundingClientRect();
+      execSpotlight.style.setProperty('--x', (e.clientX - rect.left) + 'px');
+      execSpotlight.style.setProperty('--y', (e.clientY - rect.top) + 'px');
+      execSpotlight.style.opacity = '1';
+    });
+    execCard.addEventListener('mouseleave', () => { execSpotlight.style.opacity = '0'; });
+  }
+
   // Ticker
-  const stack = ['n8n', 'Node.js', 'Python', 'OpenAI', 'Anthropic', 'Docker', 'PostgreSQL', 'Make', 'REST APIs'];
+  const stack = [
+    { name: 'n8n', slug: 'n8n', color: 'EA4B71' },
+    { name: 'Node.js', slug: 'nodedotjs', color: '339933' },
+    { name: 'Python', slug: 'python', color: '3776AB' },
+    { name: 'OpenAI', src: 'https://cdn.jsdelivr.net/npm/simple-icons@v13/icons/openai.svg', invert: true },
+    { name: 'Anthropic', slug: 'anthropic', color: 'D97757' },
+    { name: 'Docker', slug: 'docker', color: '2496ED' },
+    { name: 'PostgreSQL', slug: 'postgresql', color: '4169E1' },
+    { name: 'Make', slug: 'make', color: 'A238FF' },
+    { name: 'Postman', slug: 'postman', color: 'FF6C37' },
+  ];
   const track = document.querySelector('.ticker-track');
-  const renderBadges = (list) => list.map(name => `
-    <span class="glass rounded-full px-5 py-2 font-mono text-sm text-white/70 whitespace-nowrap border border-white/10">${name}</span>
-  `).join('');
+  const renderBadges = (list) => list.map(item => {
+    const src = item.src || `https://cdn.simpleicons.org/${item.slug}/${item.color}?viewbox=auto`;
+    const style = item.invert ? 'style="filter: invert(1) brightness(1.4);"' : '';
+    return `
+    <span class="glass rounded-full pl-3 pr-5 py-2 flex items-center gap-2.5 font-body text-sm font-medium text-white/80 whitespace-nowrap border border-white/10">
+      <img src="${src}" ${style} alt="" class="h-5 w-5 shrink-0 object-contain" loading="lazy" onerror="this.style.display='none'">
+      ${item.name}
+    </span>
+  `;
+  }).join('');
   track.innerHTML = renderBadges(stack) + renderBadges(stack);
 
   // Execution Card Animation Sequence
@@ -512,6 +1030,42 @@
 
   updateExecutionCard();
   setInterval(updateExecutionCard, 2200);
+
+  // Contact section: tab switching between "Book a Call" and "Send Your Details"
+  const tabBookBtn = document.getElementById('tabBookBtn');
+  const tabFormBtn = document.getElementById('tabFormBtn');
+  const panelBook = document.getElementById('panelBook');
+  const panelForm = document.getElementById('panelForm');
+
+  function setContactTab(tab) {
+    const isBook = tab === 'book';
+    tabBookBtn.classList.toggle('active', isBook);
+    tabFormBtn.classList.toggle('active', !isBook);
+    panelBook.classList.toggle('hidden', !isBook);
+    panelForm.classList.toggle('hidden', isBook);
+  }
+  tabBookBtn.addEventListener('click', () => setContactTab('book'));
+  tabFormBtn.addEventListener('click', () => setContactTab('form'));
+  setContactTab('book');
+
+  // Contact form: build a mailto with the submitted details (no backend attached)
+  const contactForm = document.getElementById('contactForm');
+  const cfStatus = document.getElementById('cf-status');
+  contactForm.addEventListener('submit', (e) => {
+    e.preventDefault();
+    const name = document.getElementById('cf-name').value.trim();
+    const email = document.getElementById('cf-email').value.trim();
+    const phone = document.getElementById('cf-phone').value.trim();
+    const message = document.getElementById('cf-message').value.trim();
+
+    const subject = encodeURIComponent(`New project inquiry from ${name}`);
+    const body = encodeURIComponent(
+      `Name: ${name}\nEmail: ${email}\nPhone: ${phone || 'N/A'}\n\nMessage:\n${message}`
+    );
+    window.location.href = `mailto:hello@joeautomated.dev?subject=${subject}&body=${body}`;
+    cfStatus.textContent = 'Opening your email client…';
+  });
+
 </script>
 
 </body>
