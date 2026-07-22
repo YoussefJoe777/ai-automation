@@ -8,6 +8,26 @@
 <title>Joe Automates | AI Automation Engineer & Workflow Architect</title>
 <meta name="description" content="I help businesses and creators save hundreds of hours by building custom AI Agents, integrating LLMs, and streamlining complex workflows with n8n, Node.js, and custom API pipelines.">
 
+<!-- ============ OPEN GRAPH / SOCIAL SHARING TAGS ============ -->
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://www.joeautomates.dev/">
+<meta property="og:title" content="Joe Automates | AI Automation Engineer & Workflow Architect">
+<meta property="og:description" content="I help businesses and creators save hundreds of hours by building custom AI Agents, integrating LLMs, and streamlining complex workflows with n8n, Node.js, and custom API pipelines.">
+<meta property="og:image" content="https://www.joeautomates.dev/og-image.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Joe Automates — AI Automation Engineer & Workflow Architect">
+<meta property="og:site_name" content="Joe Automates">
+<meta property="og:locale" content="en_US">
+
+<!-- Twitter / X Card -->
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:url" content="https://www.joeautomates.dev/">
+<meta name="twitter:title" content="Joe Automates | AI Automation Engineer & Workflow Architect">
+<meta name="twitter:description" content="I help businesses and creators save hundreds of hours by building custom AI Agents, integrating LLMs, and streamlining complex workflows with n8n, Node.js, and custom API pipelines.">
+<meta name="twitter:image" content="https://www.joeautomates.dev/og-image.png">
+<meta name="twitter:image:alt" content="Joe Automates — AI Automation Engineer & Workflow Architect">
+
 <!-- Tailwind CDN -->
 <script src="https://cdn.tailwindcss.com"></script>
 
@@ -282,6 +302,139 @@
     .orb, .grad-text-cyan-purple, .line-dot, .glow-frame::before, .ticker-track { animation: none !important; }
     .reveal { transition: none !important; opacity: 1 !important; transform: none !important; }
   }
+
+  /* Case Studies: fade/slide transition on tab switch */
+  .cs-panel {
+    transition: opacity .35s ease, transform .35s ease;
+    opacity: 1;
+    transform: translateY(0);
+  }
+  .cs-panel.cs-hidden { opacity: 0; transform: translateY(10px); }
+
+  /* Case Studies: metric box */
+  .cs-metric-box {
+    background: linear-gradient(135deg, rgba(0,242,254,0.08), rgba(157,78,221,0.08));
+    border: 1px solid rgba(255,255,255,0.1);
+  }
+
+  /* Case Studies: mini node-flow visual */
+  .cs-node {
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    background: rgba(18, 24, 38, 0.6);
+    transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+  .cs-node.cs-node-active-cyan {
+    border-color: #00F2FE;
+    background: rgba(18, 24, 38, 0.95);
+    box-shadow: 0 0 20px rgba(0, 242, 254, 0.22), inset 0 0 8px rgba(0, 242, 254, 0.1);
+  }
+  .cs-node.cs-node-active-purple {
+    border-color: #9D4EDD;
+    background: rgba(18, 24, 38, 0.95);
+    box-shadow: 0 0 20px rgba(157, 78, 221, 0.22), inset 0 0 8px rgba(157, 78, 221, 0.1);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .cs-panel { transition: none !important; }
+  }
+
+  /* Case Studies: corner "view architecture" button */
+  .cs-view-btn {
+    font-family: 'Inter', sans-serif;
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: rgba(0, 242, 254, 0.85);
+    background: rgba(0, 242, 254, 0.06);
+    border: 1px solid rgba(0, 242, 254, 0.25);
+    border-radius: 9999px;
+    padding: 0.4rem 0.85rem;
+    cursor: pointer;
+    white-space: nowrap;
+    transition: all .25s ease;
+  }
+  .cs-view-btn:hover {
+    color: #000;
+    background: linear-gradient(90deg, #00F2FE 0%, #8B5CF6 100%);
+    border-color: transparent;
+    box-shadow: 0 0 18px rgba(0,242,254,0.3);
+    transform: translateY(-1px);
+  }
+
+  /* Case Studies: Workflow Architecture Modal */
+  .cs-modal-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 70;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 1.25rem;
+    background: rgba(3, 5, 10, 0.72);
+    backdrop-filter: blur(6px);
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity .3s ease, visibility .3s ease;
+  }
+  .cs-modal-overlay.open { opacity: 1; visibility: visible; }
+
+  .cs-modal {
+    position: relative;
+    width: 100%;
+    max-width: 68rem;
+    border-radius: 1.25rem;
+    border-color: rgba(255,255,255,0.12);
+    box-shadow: 0 30px 80px -20px rgba(0,0,0,0.7), 0 0 0 1px rgba(0,242,254,0.08);
+    transform: translateY(24px) scale(0.98);
+    opacity: 0;
+    transition: transform .35s cubic-bezier(.4,0,.2,1), opacity .35s ease;
+    overflow: hidden;
+  }
+  .cs-modal-overlay.open .cs-modal { transform: translateY(0) scale(1); opacity: 1; }
+
+  .cs-modal-close {
+    position: absolute;
+    top: 1rem; right: 1rem;
+    z-index: 5;
+    height: 2.25rem; width: 2.25rem;
+    border-radius: 9999px;
+    display: flex; align-items: center; justify-content: center;
+    color: rgba(231,236,243,0.7);
+    background: rgba(255,255,255,0.05);
+    border: 1px solid rgba(255,255,255,0.12);
+    cursor: pointer;
+    transition: all .25s ease;
+  }
+  .cs-modal-close:hover { color: #fff; background: rgba(0,242,254,0.15); border-color: rgba(0,242,254,0.4); transform: rotate(90deg); }
+
+  /* Modal: elegant thin scrollbar (desktop + mobile) */
+  .cs-modal-scroll { scrollbar-width: thin; scrollbar-color: rgba(0,242,254,0.35) transparent; }
+  .cs-modal-scroll::-webkit-scrollbar { width: 7px; }
+  .cs-modal-scroll::-webkit-scrollbar-track { background: transparent; }
+  .cs-modal-scroll::-webkit-scrollbar-thumb { background: rgba(0,242,254,0.35); border-radius: 9999px; }
+  .cs-modal-scroll::-webkit-scrollbar-thumb:hover { background: rgba(0,242,254,0.55); }
+
+  /* Video walkthrough placeholder */
+  .cs-video-frame {
+    position: relative;
+    border-radius: 1rem;
+    overflow: hidden;
+    border: 1px solid rgba(255,255,255,0.1);
+    background:
+      radial-gradient(circle at 30% 20%, rgba(0,242,254,0.16), transparent 55%),
+      radial-gradient(circle at 75% 80%, rgba(157,78,221,0.18), transparent 55%),
+      #0D121F;
+  }
+  .cs-play-btn {
+    height: 3.75rem; width: 3.75rem;
+    border-radius: 9999px;
+    display: flex; align-items: center; justify-content: center;
+    background: linear-gradient(90deg, #00F2FE 0%, #8B5CF6 100%);
+    color: #000;
+    box-shadow: 0 0 30px rgba(0,242,254,0.35);
+    transition: transform .25s ease, box-shadow .25s ease;
+    cursor: pointer;
+  }
+  .cs-play-btn:hover { transform: scale(1.08); box-shadow: 0 0 40px rgba(0,242,254,0.5); }
 </style>
 </head>
 
@@ -356,6 +509,36 @@
       <div class="mt-8 flex flex-wrap items-center gap-4">
         <a href="#contact" class="btn-primary rounded-full px-7 py-3 text-sm font-semibold">📅 Book a Call</a>
         <a href="#workflows" class="btn-outline-cyan rounded-full px-7 py-3 text-sm font-medium">👀 Explore Live Workflows</a>
+      </div>
+
+      <!-- Social Proof Strip -->
+      <div class="mt-8 flex flex-col sm:flex-row sm:flex-wrap sm:items-center gap-4 sm:gap-5 reveal" data-reveal>
+
+        <div class="flex items-center gap-3">
+          <div class="flex -space-x-3 shrink-0">
+            <img src="https://i.pravatar.cc/64?img=12" alt="Client avatar" loading="lazy" class="h-9 w-9 rounded-full border-2 border-[#080C14] ring-1 ring-white/10 object-cover">
+            <img src="https://i.pravatar.cc/64?img=32" alt="Client avatar" loading="lazy" class="h-9 w-9 rounded-full border-2 border-[#080C14] ring-1 ring-white/10 object-cover">
+            <img src="https://i.pravatar.cc/64?img=47" alt="Client avatar" loading="lazy" class="h-9 w-9 rounded-full border-2 border-[#080C14] ring-1 ring-white/10 object-cover">
+          </div>
+          <div class="flex flex-col leading-tight">
+            <span class="flex items-center gap-1.5">
+              <span class="text-amber-400 text-sm tracking-tight">★★★★★</span>
+              <span class="text-white font-display font-bold text-sm">5.0</span>
+            </span>
+            <span class="mt-1 text-xs text-white/50 font-body whitespace-nowrap">Saved 1,000+ hrs across 15+ teams</span>
+          </div>
+        </div>
+
+        <div class="hidden sm:block h-9 w-px bg-white/10"></div>
+
+        <div class="glass rounded-full pl-1.5 pr-4 py-1.5 inline-flex items-center gap-2.5 max-w-full sm:max-w-xs">
+          <span class="h-6 w-6 shrink-0 rounded-full bg-cyan/10 border border-cyan/30 flex items-center justify-center text-cyan text-xs font-display font-bold">"</span>
+          <p class="text-xs text-white/60 leading-snug">
+            <span class="text-white/80">"Joe's n8n workflow saved us 20 hrs/week"</span>
+            <span class="text-white/40 block sm:inline">— Founder, DTC brand</span>
+          </p>
+        </div>
+
       </div>
     </div>
 
@@ -764,30 +947,58 @@
     </div>
 
     <div class="mt-12 grid md:grid-cols-3 gap-6">
-      <div class="glass card-hover rounded-2xl overflow-hidden reveal" data-reveal>
-        <div class="p-6">
+      <div class="glass card-hover rounded-2xl overflow-hidden reveal flex flex-col" data-reveal>
+        <div class="p-6 flex flex-col flex-1">
           <span class="font-mono text-[11px] text-cyan block mb-2">🤖 RAG &middot; CUSTOMER SUPPORT</span>
           <h3 class="font-display font-bold text-lg text-white">AI-Powered Customer Support Agent</h3>
-          <p class="mt-2 text-sm text-white/60">Retrieval-augmented agent trained on internal docs, resolving 85% of tier-1 tickets without a human.</p>
+          <p class="mt-2 text-sm text-white/60 flex-1">Retrieval-augmented agent trained on internal docs, resolving 85% of tier-1 tickets without a human.</p>
+          <div class="mt-4 flex justify-end">
+            <button type="button" class="cs-view-btn" data-case="support">🔍 View Full Workflow Architecture</button>
+          </div>
         </div>
       </div>
-      <div class="glass card-hover rounded-2xl overflow-hidden reveal" data-reveal>
-        <div class="p-6">
+      <div class="glass card-hover rounded-2xl overflow-hidden reveal flex flex-col" data-reveal>
+        <div class="p-6 flex flex-col flex-1">
           <span class="font-mono text-[11px] text-purple block mb-2">🎬 MEDIA &middot; ANALYTICS</span>
           <h3 class="font-display font-bold text-lg text-white">Short-Form Video &amp; Analytics Pipeline</h3>
-          <p class="mt-2 text-sm text-white/60">Automated clipping, captioning, and cross-platform posting with performance tracked back to source.</p>
+          <p class="mt-2 text-sm text-white/60 flex-1">Automated clipping, captioning, and cross-platform posting with performance tracked back to source.</p>
+          <div class="mt-4 flex justify-end">
+            <button type="button" class="cs-view-btn" data-case="video">🔍 View Full Workflow Architecture</button>
+          </div>
         </div>
       </div>
-      <div class="glass card-hover rounded-2xl overflow-hidden reveal" data-reveal>
-        <div class="p-6">
+      <div class="glass card-hover rounded-2xl overflow-hidden reveal flex flex-col" data-reveal>
+        <div class="p-6 flex flex-col flex-1">
           <span class="font-mono text-[11px] text-cyan block mb-2">🔗 CRM &middot; WEBHOOK SYNC</span>
           <h3 class="font-display font-bold text-lg text-white">Enterprise CRM &amp; Webhook Sync</h3>
-          <p class="mt-2 text-sm text-white/60">Bi-directional sync across business systems with error-handling logic and full audit logging.</p>
+          <p class="mt-2 text-sm text-white/60 flex-1">Bi-directional sync across business systems with error-handling logic and full audit logging.</p>
+          <div class="mt-4 flex justify-end">
+            <button type="button" class="cs-view-btn" data-case="crm">🔍 View Full Workflow Architecture</button>
+          </div>
         </div>
       </div>
     </div>
   </div>
 </section>
+
+<!-- ============ CASE STUDY: WORKFLOW ARCHITECTURE MODAL ============ -->
+<div id="csModalOverlay" class="cs-modal-overlay">
+  <div id="csModal" class="cs-modal glass">
+    <button type="button" id="csModalClose" aria-label="Close" class="cs-modal-close">
+      <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6 6 18M6 6l12 12"/></svg>
+    </button>
+
+    <div class="grid lg:grid-cols-2 max-h-[85vh] overflow-y-auto cs-modal-scroll">
+
+      <!-- Left: full breakdown -->
+      <div id="csModalLeft" class="p-7 sm:p-9"></div>
+
+      <!-- Right: video walkthrough -->
+      <div id="csModalRight" class="p-7 sm:p-9 bg-[#090D16] border-t lg:border-t-0 lg:border-l border-white/5 flex flex-col"></div>
+
+    </div>
+  </div>
+</div>
 
 <!-- ============ FINAL CTA & CONTACT ============ -->
 <section id="contact" class="relative px-6 lg:px-8 py-24 border-t border-white/[0.06] overflow-hidden">
@@ -899,10 +1110,10 @@
                   class="w-full rounded-xl bg-white/[0.04] border border-white/10 px-4 py-3 text-sm text-white placeholder-white/30 focus:outline-none focus:border-cyan/60 focus:ring-2 focus:ring-cyan/20 transition-all resize-none"></textarea>
               </div>
 
-              <button type="submit" class="btn-primary w-full rounded-xl px-6 py-3.5 text-sm font-semibold">
-                🚀 Send My Details
+              <button type="submit" id="cf-submit-btn" class="btn-primary w-full rounded-xl px-6 py-3.5 text-sm font-semibold flex items-center justify-center gap-2">
+                <span id="cf-submit-label">🚀 Send My Details</span>
               </button>
-              <p id="cf-status" class="text-xs text-center text-white/40 font-mono min-h-[1rem]"></p>
+              <p id="cf-status" class="text-xs text-center font-mono min-h-[1rem]"></p>
             </form>
           </div>
 
@@ -1209,22 +1420,70 @@
   tabFormBtn.addEventListener('click', () => setContactTab('form'));
   setContactTab('book');
 
-  // Contact form: build a mailto with the submitted details (no backend attached)
+  // Contact form: submit to an n8n webhook (which sends the client a confirmation email)
+  // 🔧 Replace this with your real n8n Production webhook URL
+  const N8N_WEBHOOK_URL = 'https://YOUR-N8N-INSTANCE.app.n8n.cloud/webhook/contact-form';
+
   const contactForm = document.getElementById('contactForm');
   const cfStatus = document.getElementById('cf-status');
-  contactForm.addEventListener('submit', (e) => {
+  const cfSubmitBtn = document.getElementById('cf-submit-btn');
+  const cfSubmitLabel = document.getElementById('cf-submit-label');
+
+  contactForm.addEventListener('submit', async (e) => {
     e.preventDefault();
+
     const name = document.getElementById('cf-name').value.trim();
     const email = document.getElementById('cf-email').value.trim();
     const phone = document.getElementById('cf-phone').value.trim();
     const message = document.getElementById('cf-message').value.trim();
 
-    const subject = encodeURIComponent(`New project inquiry from ${name}`);
-    const body = encodeURIComponent(
-      `Name: ${name}\nEmail: ${email}\nPhone: ${phone || 'N/A'}\n\nMessage:\n${message}`
-    );
-    window.location.href = `mailto:hello@joeautomates.dev?subject=${subject}&body=${body}`;
-    cfStatus.textContent = 'Opening your email client…';
+    // Reset status styling
+    cfStatus.classList.remove('text-emerald-400', 'text-red-400');
+    cfStatus.classList.add('text-white/40');
+    cfStatus.textContent = 'Sending…';
+    cfSubmitBtn.disabled = true;
+    cfSubmitBtn.style.opacity = '0.7';
+    cfSubmitLabel.textContent = '⏳ Sending…';
+
+    try {
+      const response = await fetch(N8N_WEBHOOK_URL, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          name,
+          email,
+          phone: phone || null,
+          message,
+          source: 'joeautomates.dev/contact',
+          submitted_at: new Date().toISOString()
+        })
+      });
+
+      if (!response.ok) throw new Error('Webhook responded with status ' + response.status);
+
+      // Success: show a clean inline confirmation instead of redirecting to mailto
+      cfStatus.classList.remove('text-white/40', 'text-red-400');
+      cfStatus.classList.add('text-emerald-400');
+      cfStatus.textContent = '✅ Message sent successfully!';
+      cfSubmitLabel.textContent = '✅ Sent!';
+      contactForm.reset();
+
+      // Restore the button after a moment so the person can send another message if needed
+      setTimeout(() => {
+        cfSubmitBtn.disabled = false;
+        cfSubmitBtn.style.opacity = '1';
+        cfSubmitLabel.textContent = '🚀 Send My Details';
+      }, 2500);
+
+    } catch (err) {
+      console.error('Contact form webhook error:', err);
+      cfStatus.classList.remove('text-white/40', 'text-emerald-400');
+      cfStatus.classList.add('text-red-400');
+      cfStatus.textContent = '⚠️ Something went wrong — please email us directly at hello@joeautomates.dev';
+      cfSubmitBtn.disabled = false;
+      cfSubmitBtn.style.opacity = '1';
+      cfSubmitLabel.textContent = '🚀 Send My Details';
+    }
   });
 
   // FAQ accordion — click a question to expand its answer, others collapse
@@ -1250,6 +1509,200 @@
       const panel = openItem.querySelector('.faq-panel');
       panel.style.maxHeight = panel.scrollHeight + 'px';
     }
+  });
+
+  // ============ Case Studies: "View Full Workflow Architecture" Modal ============
+  const caseStudyData = {
+    support: {
+      badge: 'RAG &middot; CUSTOMER SUPPORT',
+      badgeColor: 'cyan',
+      title: 'AI-Powered Customer Support Agent',
+      challenge: 'Support was drowning in repetitive tier-1 tickets &mdash; password resets, order status, basic troubleshooting &mdash; leaving little time for the complex cases that actually needed a human.',
+      solution: 'Built a retrieval-augmented agent trained on internal docs and past tickets, connected directly to Claude Sonnet. It classifies intent, pulls the right context, and drafts (or sends) an accurate reply in seconds.',
+      metricValue: '85%',
+      metricLabel: 'of tier-1 tickets resolved without a human',
+      secondaryMetrics: [
+        { value: '60%', label: 'Faster Response Time' },
+        { value: '15h', label: 'Saved Per Week' }
+      ],
+      videoLabel: 'Support Agent &middot; Walkthrough',
+      nodes: [
+        { label: 'Webhook Trigger', detail: 'new_ticket_created', color: 'cyan' },
+        { label: 'Vector Search', detail: 'retrieve relevant docs', color: 'purple' },
+        { label: 'Claude Sonnet', detail: 'classify + draft reply', color: 'cyan' },
+        { label: 'Auto Reply', detail: 'ticket resolved &middot; CRM updated', color: 'purple' }
+      ]
+    },
+    video: {
+      badge: 'MEDIA &middot; ANALYTICS',
+      badgeColor: 'purple',
+      title: 'Short-Form Video &amp; Content Pipeline',
+      challenge: 'Long-form content was being recorded but never repurposed &mdash; the team lacked the hours to clip, caption, and post consistently across every platform.',
+      solution: 'An automated pipeline that ingests raw footage, identifies the strongest moments, generates captions, and schedules cross-platform posts &mdash; with performance tracked back to the original source video.',
+      metricValue: '20+',
+      metricLabel: 'hours saved per week on editing &amp; posting',
+      secondaryMetrics: [
+        { value: '60%', label: 'Faster Response Time' },
+        { value: '15h', label: 'Saved Per Week' }
+      ],
+      videoLabel: 'Content Pipeline &middot; Walkthrough',
+      nodes: [
+        { label: 'New Upload', detail: 'raw footage ingested', color: 'purple' },
+        { label: 'AI Clipping', detail: 'highlight detection', color: 'cyan' },
+        { label: 'Auto Captioning', detail: 'burned-in subtitles', color: 'purple' },
+        { label: 'Multi-Post', detail: 'scheduled &middot; analytics synced', color: 'cyan' }
+      ]
+    },
+    crm: {
+      badge: 'CRM &middot; WEBHOOK SYNC',
+      badgeColor: 'cyan',
+      title: 'Enterprise CRM &amp; Webhook Sync',
+      challenge: 'Customer data lived in five different tools that never talked to each other, forcing the team to manually re-key records and reconcile mismatches every week.',
+      solution: 'A bi-directional sync layer built on n8n and direct APIs, with error-handling logic, automatic retries, and full audit logging &mdash; so every system stays consistent without anyone touching a spreadsheet.',
+      metricValue: '0',
+      metricLabel: 'manual re-entries since launch &middot; 100% audit logged',
+      secondaryMetrics: [
+        { value: '60%', label: 'Faster Response Time' },
+        { value: '15h', label: 'Saved Per Week' }
+      ],
+      videoLabel: 'CRM Sync &middot; Walkthrough',
+      nodes: [
+        { label: 'Webhook In', detail: 'record created/updated', color: 'cyan' },
+        { label: 'Transform', detail: 'map + validate fields', color: 'purple' },
+        { label: 'Sync Out', detail: 'push to connected systems', color: 'cyan' },
+        { label: 'Audit Log', detail: 'change recorded &middot; 0 errors', color: 'purple' }
+      ]
+    }
+  };
+
+  const csModalOverlay = document.getElementById('csModalOverlay');
+  const csModal = document.getElementById('csModal');
+  const csModalClose = document.getElementById('csModalClose');
+  const csModalLeft = document.getElementById('csModalLeft');
+  const csModalRight = document.getElementById('csModalRight');
+  const csViewButtons = document.querySelectorAll('.cs-view-btn');
+  let csNodeInterval = null;
+  let csNodeIndex = 0;
+
+  function csBuildLeft(data) {
+    const badgeColorClass = data.badgeColor === 'purple' ? 'text-purple' : 'text-cyan';
+    const nodesHtml = data.nodes.map((node, i) => `
+      <div id="csNode-${i}" class="cs-node rounded-xl p-3 flex items-center justify-between">
+        <div class="flex items-center gap-3">
+          <span id="csNode-${i}-num" class="h-7 w-7 rounded-lg bg-white/5 border border-white/10 text-white/50 text-xs font-bold flex items-center justify-center font-mono transition-colors">0${i + 1}</span>
+          <div>
+            <div class="text-xs font-bold text-white font-sans">${node.label}</div>
+            <div class="text-[11px] text-white/40 mt-0.5 font-mono">${node.detail}</div>
+          </div>
+        </div>
+      </div>
+      ${i < data.nodes.length - 1 ? '<div class="flex justify-center my-1"><div class="h-3 w-0.5 border-r border-dashed border-white/20"></div></div>' : ''}
+    `).join('');
+
+    return `
+      <span class="font-mono text-[11px] ${badgeColorClass} tracking-wider block mb-4">${data.badge}</span>
+      <h3 class="font-display font-bold text-2xl text-white leading-snug pr-8">${data.title}</h3>
+
+      <div class="mt-6 space-y-5">
+        <div>
+          <p class="font-mono text-[11px] tracking-[0.2em] uppercase text-white/40 mb-1.5">The Challenge</p>
+          <p class="text-sm text-white/60 leading-relaxed">${data.challenge}</p>
+        </div>
+        <div>
+          <p class="font-mono text-[11px] tracking-[0.2em] uppercase text-white/40 mb-1.5">The Solution</p>
+          <p class="text-sm text-white/60 leading-relaxed">${data.solution}</p>
+        </div>
+      </div>
+
+      <div class="cs-metric-box mt-6 rounded-2xl p-5 flex items-center gap-4">
+        <span class="font-display font-extrabold text-3xl sm:text-4xl grad-text-cyan-purple shrink-0">${data.metricValue}</span>
+        <span class="text-sm text-white/70 leading-snug">${data.metricLabel}</span>
+      </div>
+
+      <div class="mt-3 grid grid-cols-2 gap-3">
+        ${data.secondaryMetrics.map(m => `
+          <div class="rounded-xl border border-white/10 bg-white/[0.03] px-4 py-3 text-center">
+            <span class="font-display font-extrabold text-xl text-white block">${m.value}</span>
+            <span class="text-[11px] text-white/50 leading-snug block mt-0.5">${m.label}</span>
+          </div>
+        `).join('')}
+      </div>
+
+      <div class="mt-6">
+        <p class="font-mono text-[11px] tracking-[0.2em] uppercase text-white/40 mb-3">Pipeline Architecture</p>
+        <div class="space-y-3 font-mono">
+          ${nodesHtml}
+        </div>
+      </div>
+    `;
+  }
+
+  function csBuildRight(data) {
+    return `
+      <p class="font-mono text-[11px] tracking-[0.2em] uppercase text-white/40 mb-4">Video Walkthrough</p>
+      <div class="cs-video-frame aspect-video flex items-center justify-center flex-1">
+        <div class="cs-play-btn">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 ml-0.5" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+        </div>
+      </div>
+      <p class="mt-4 text-sm font-semibold text-white">${data.videoLabel}</p>
+      <p class="mt-1 text-xs text-white/40 leading-relaxed">A short screen-recorded walkthrough of this exact workflow running end-to-end, node by node.</p>
+    `;
+  }
+
+  function csApplyNodeHighlight(data) {
+    data.nodes.forEach((node, i) => {
+      const nodeEl = document.getElementById(`csNode-${i}`);
+      const numEl = document.getElementById(`csNode-${i}-num`);
+      if (!nodeEl || !numEl) return;
+      nodeEl.className = 'cs-node rounded-xl p-3 flex items-center justify-between';
+      numEl.className = 'h-7 w-7 rounded-lg bg-white/5 border border-white/10 text-white/50 text-xs font-bold flex items-center justify-center font-mono transition-colors';
+    });
+    const activeNode = document.getElementById(`csNode-${csNodeIndex}`);
+    const activeNum = document.getElementById(`csNode-${csNodeIndex}-num`);
+    const activeData = data.nodes[csNodeIndex];
+    if (!activeNode || !activeNum || !activeData) return;
+    const isCyan = activeData.color === 'cyan';
+    activeNode.classList.add(isCyan ? 'cs-node-active-cyan' : 'cs-node-active-purple');
+    activeNum.className = `h-7 w-7 rounded-lg text-xs font-bold flex items-center justify-center font-mono transition-colors ${isCyan ? 'bg-cyan/20 border border-cyan/50 text-cyan' : 'bg-purple/20 border border-purple/50 text-purple'}`;
+  }
+
+  function csStartNodeCycle(data) {
+    if (csNodeInterval) clearInterval(csNodeInterval);
+    csNodeIndex = 0;
+    csApplyNodeHighlight(data);
+    csNodeInterval = setInterval(() => {
+      csNodeIndex = (csNodeIndex + 1) % data.nodes.length;
+      csApplyNodeHighlight(data);
+    }, 1800);
+  }
+
+  function csOpenModal(key) {
+    const data = caseStudyData[key];
+    if (!data) return;
+    csModalLeft.innerHTML = csBuildLeft(data);
+    csModalRight.innerHTML = csBuildRight(data);
+    csStartNodeCycle(data);
+    csModalOverlay.classList.add('open');
+    document.body.style.overflow = 'hidden';
+  }
+
+  function csCloseModal() {
+    csModalOverlay.classList.remove('open');
+    document.body.style.overflow = '';
+    if (csNodeInterval) { clearInterval(csNodeInterval); csNodeInterval = null; }
+  }
+
+  csViewButtons.forEach(btn => {
+    btn.addEventListener('click', () => csOpenModal(btn.dataset.case));
+  });
+
+  csModalClose.addEventListener('click', csCloseModal);
+  csModalOverlay.addEventListener('click', (e) => {
+    if (e.target === csModalOverlay) csCloseModal();
+  });
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && csModalOverlay.classList.contains('open')) csCloseModal();
   });
 
 </script>
