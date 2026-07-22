@@ -1,0 +1,488 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Joe Automated | AI Automation Engineer & Workflow Architect</title>
+<meta name="description" content="I help businesses and creators save hundreds of hours by building custom AI Agents, integrating LLMs, and streamlining complex workflows with n8n, Node.js, and custom API pipelines.">
+
+<!-- Tailwind CDN -->
+<script src="https://cdn.tailwindcss.com"></script>
+
+<!-- Fonts -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;600;700;800&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+
+<!-- Cal.com Embed Script -->
+<script type="text/javascript">
+  (function (C, A, L) { let p = function (a, ar) { a.q.push(ar); }; C.Cal = C.Cal || function () { let cal = C.Cal; let arg = arguments; if (!cal.q) { cal.q = []; } p(cal, arg); }; })(window, "https://app.cal.com/embed/embed.js", "init");
+  Cal("init", {origin:"https://cal.com"});
+
+  Cal("inline", {
+    elementOrSelector:"#my-cal-inline",
+    calLink: "joe-automated/30min", // ضع رابط حسابك في Cal.com هنا
+    layout: "month_view"
+  });
+
+  Cal("ui", {"theme":"dark","styles":{"branding":{"brandColor":"#00F2FE"}},"hideEventTypeDetails":false,"layout":"month_view"});
+</script>
+
+<script>
+  tailwind.config = {
+    theme: {
+      extend: {
+        colors: {
+          base: '#080C14',
+          panel: '#0D121F',
+          cardBg: '#111726',
+          cyan: '#00F2FE',
+          purple: '#9D4EDD',
+          emeraldAccent: '#22c55e'
+        },
+        fontFamily: {
+          display: ['"Plus Jakarta Sans"', 'sans-serif'],
+          body: ['Inter', 'sans-serif'],
+          mono: ['"JetBrains Mono"', 'monospace'],
+        },
+      }
+    }
+  }
+</script>
+
+<style>
+  :root {
+    --cyan: #00F2FE;
+    --purple: #9D4EDD;
+  }
+  html { background: #080C14; }
+  body {
+    background-color: #080C14;
+    background-image:
+      linear-gradient(rgba(255,255,255,0.02) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255,255,255,0.02) 1px, transparent 1px);
+    background-size: 32px 32px;
+    color: #E7ECF3;
+    font-family: 'Inter', sans-serif;
+  }
+
+  .glass {
+    background: rgba(13, 18, 31, 0.7);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    backdrop-filter: blur(16px);
+  }
+
+  .grad-text-cyan-purple {
+    background: linear-gradient(90deg, #00F2FE 0%, #3B82F6 40%, #9D4EDD 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+
+  .btn-primary {
+    background: linear-gradient(90deg, #00F2FE 0%, #8B5CF6 100%);
+    color: #000000;
+    font-weight: 600;
+    transition: all .25s ease;
+  }
+  .btn-primary:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 0 25px rgba(0, 242, 254, 0.4);
+  }
+
+  .btn-outline-cyan {
+    border: 1px solid rgba(0, 242, 254, 0.4);
+    background: rgba(0, 242, 254, 0.03);
+    color: #E7ECF3;
+    transition: all .25s ease;
+  }
+  .btn-outline-cyan:hover {
+    border-color: #00F2FE;
+    background: rgba(0, 242, 254, 0.1);
+  }
+
+  .card-hover { transition: transform .3s ease, border-color .3s ease, box-shadow .3s ease; }
+  .card-hover:hover { transform: translateY(-4px); border-color: rgba(0,242,254,0.35); box-shadow: 0 0 0 1px rgba(0,242,254,0.18), 0 20px 40px -20px rgba(0,242,254,0.35); }
+
+  /* Animated Node Card Styles */
+  .node-card {
+    transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    background: rgba(18, 24, 38, 0.6);
+  }
+
+  .node-active-cyan {
+    border-color: #00F2FE !important;
+    background: rgba(18, 24, 38, 0.95) !important;
+    box-shadow: 0 0 25px rgba(0, 242, 254, 0.25), inset 0 0 10px rgba(0, 242, 254, 0.1);
+  }
+
+  .node-active-purple {
+    border-color: #9D4EDD !important;
+    background: rgba(18, 24, 38, 0.95) !important;
+    box-shadow: 0 0 25px rgba(157, 78, 221, 0.25), inset 0 0 10px rgba(157, 78, 221, 0.1);
+  }
+
+  .reveal { opacity:0; transform: translateY(18px); transition: opacity .7s ease, transform .7s ease; }
+  .reveal.in { opacity:1; transform: translateY(0); }
+
+  .ticker-track { animation: ticker 28s linear infinite; }
+  @keyframes ticker { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+</style>
+</head>
+
+<body class="antialiased">
+
+<!-- ============ HEADER / NAV ============ -->
+<header class="fixed top-0 inset-x-0 z-50">
+  <div class="mx-auto max-w-7xl px-6 lg:px-8">
+    <div class="mt-4 glass rounded-2xl px-5 py-3 flex items-center justify-between">
+      <a href="#top" class="flex items-center gap-3 font-display font-extrabold tracking-tight text-lg">
+        <span>JOE <span class="grad-text-cyan-purple">[AUTOMATED]</span></span>
+        <span class="hidden sm:inline-flex items-center gap-1.5 rounded-full border border-white/10 bg-white/5 px-2.5 py-1 text-[11px] font-body font-medium text-emerald-300">
+          <span class="h-1.5 w-1.5 rounded-full bg-emerald-400"></span>
+          Available for Projects
+        </span>
+      </a>
+
+      <nav class="hidden md:flex items-center gap-8 font-body text-sm text-white/70">
+        <a href="#services" class="hover:text-white transition-colors">Services</a>
+        <a href="#workflows" class="hover:text-white transition-colors">Workflows</a>
+        <a href="#stack" class="hover:text-white transition-colors">Tech Stack</a>
+        <a href="#case-studies" class="hover:text-white transition-colors">Case Studies</a>
+      </nav>
+
+      <div class="flex items-center gap-3">
+        <a href="#contact" class="hidden sm:inline-flex btn-primary rounded-xl px-4 py-2 text-sm">Book a Strategy Call</a>
+      </div>
+    </div>
+  </div>
+</header>
+
+<!-- ============ HERO SECTION ============ -->
+<section id="top" class="relative pt-36 pb-20 lg:pt-44 lg:pb-28 px-6 lg:px-8 overflow-hidden">
+  <div class="mx-auto max-w-7xl grid lg:grid-cols-12 gap-12 items-center">
+
+    <!-- Left Content -->
+    <div class="lg:col-span-6">
+      <h1 class="font-display font-extrabold text-4xl sm:text-5xl lg:text-6xl tracking-tight leading-[1.08] text-white">
+        Automate the<br>mundane.<br>
+        <span class="grad-text-cyan-purple">Scale the<br>extraordinary.</span>
+      </h1>
+      <p class="mt-6 text-base sm:text-lg text-white/70 max-w-lg leading-relaxed">
+        I'm Joe — I help businesses and creators save hundreds of hours by building custom AI agents, integrating LLMs, and streamlining complex workflows with n8n, Node.js, and custom API pipelines.
+      </p>
+
+      <div class="mt-8 flex flex-wrap items-center gap-4">
+        <a href="#contact" class="btn-primary rounded-full px-7 py-3 text-sm font-semibold">Book a Call</a>
+        <a href="#workflows" class="btn-outline-cyan rounded-full px-7 py-3 text-sm font-medium">Explore Live Workflows</a>
+      </div>
+    </div>
+
+    <!-- Right Hero Execution Card -->
+    <div class="lg:col-span-6 reveal" data-reveal>
+      <div class="bg-[#090D16] border border-cyan/20 rounded-2xl p-6 sm:p-7 relative shadow-[0_0_50px_-12px_rgba(0,242,254,0.15)]">
+        
+        <div class="flex items-center justify-between pb-6 border-b border-white/5 font-mono text-xs">
+          <span class="text-white/40 tracking-wider">workflow_execution.live</span>
+          <span class="inline-flex items-center gap-2 text-emerald-400">
+            <span class="h-2 w-2 rounded-full bg-emerald-400 animate-pulse"></span>
+            running
+          </span>
+        </div>
+
+        <div class="mt-6 space-y-3 font-mono">
+          <div id="node-1" class="node-card rounded-xl p-4 flex items-center justify-between">
+            <div class="flex items-center gap-4">
+              <span id="node-1-num" class="h-8 w-8 rounded-lg bg-cyan/10 border border-cyan/30 text-cyan text-xs font-bold flex items-center justify-center transition-colors">01</span>
+              <div>
+                <div class="text-sm font-bold text-white font-sans">Trigger</div>
+                <div class="text-xs text-white/40 mt-0.5">webhook &middot; new_lead_submitted</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="flex justify-center my-1">
+            <div class="h-3 w-0.5 border-r border-dashed border-white/20"></div>
+          </div>
+
+          <div id="node-2" class="node-card rounded-xl p-4 flex items-center justify-between">
+            <div class="flex items-center gap-4">
+              <span id="node-2-num" class="h-8 w-8 rounded-lg bg-white/5 border border-white/10 text-white/50 text-xs font-bold flex items-center justify-center transition-colors">02</span>
+              <div>
+                <div class="text-sm font-bold text-white font-sans">LLM Processing</div>
+                <div class="text-xs text-white/40 mt-0.5">claude-sonnet &middot; classify + draft reply</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="flex justify-center my-1">
+            <div class="h-3 w-0.5 border-r border-dashed border-white/20"></div>
+          </div>
+
+          <div id="node-3" class="node-card rounded-xl p-4 flex items-center justify-between">
+            <div class="flex items-center gap-4">
+              <span id="node-3-num" class="h-8 w-8 rounded-lg bg-white/5 border border-white/10 text-white/50 text-xs font-bold flex items-center justify-center transition-colors">03</span>
+              <div>
+                <div class="text-sm font-bold text-white font-sans">Action Output</div>
+                <div class="text-xs text-white/40 mt-0.5">CRM updated &middot; reply sent &middot; Slack notified</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="mt-6 pt-4 border-t border-white/5 flex items-center justify-between text-xs font-mono text-white/40">
+          <span>latency: <span id="latency-val" class="text-white/70">816ms</span></span>
+          <span>0 errors / 24h</span>
+        </div>
+
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ============ METRICS BANNER ============ -->
+<section class="border-y border-white/[0.06] bg-white/[0.01] px-6 lg:px-8 py-10">
+  <div class="mx-auto max-w-7xl grid grid-cols-1 sm:grid-cols-3 gap-8 text-center">
+    <div class="reveal" data-reveal>
+      <p class="font-display font-extrabold text-3xl lg:text-4xl grad-text-cyan-purple">100+ hrs</p>
+      <p class="mt-2 text-sm text-white/60">saved per month, per client</p>
+    </div>
+    <div class="reveal" data-reveal>
+      <p class="font-display font-extrabold text-3xl lg:text-4xl grad-text-cyan-purple">99.9%</p>
+      <p class="mt-2 text-sm text-white/60">pipeline reliability</p>
+    </div>
+    <div class="reveal" data-reveal>
+      <p class="font-display font-extrabold text-3xl lg:text-4xl grad-text-cyan-purple">Custom</p>
+      <p class="mt-2 text-sm text-white/60">AI agents &amp; RAG architecture</p>
+    </div>
+  </div>
+</section>
+
+<!-- ============ SERVICES ============ -->
+<section id="services" class="px-6 lg:px-8 py-24">
+  <div class="mx-auto max-w-7xl">
+    <div class="max-w-2xl reveal" data-reveal>
+      <p class="font-mono text-xs tracking-[0.25em] uppercase text-cyan mb-4">Services</p>
+      <h2 class="font-display font-extrabold text-3xl lg:text-4xl tracking-tight text-white">Built to remove friction, not add features.</h2>
+      <p class="mt-4 text-white/60">Every engagement starts with the same question: what is slowing your team down, and what would it look like running itself?</p>
+    </div>
+
+    <div class="mt-12 grid md:grid-cols-3 gap-6">
+      <div class="glass card-hover rounded-2xl p-7">
+        <h3 class="font-display font-bold text-lg text-white">Custom AI Agents &amp; LLM Integration</h3>
+        <p class="mt-3 text-sm text-white/60 leading-relaxed">Decision-making agents built on retrieval-augmented generation and vector databases — connected directly to OpenAI and Anthropic models.</p>
+      </div>
+
+      <div class="glass card-hover rounded-2xl p-7">
+        <h3 class="font-display font-bold text-lg text-white">Workflow &amp; System Orchestration</h3>
+        <p class="mt-3 text-sm text-white/60 leading-relaxed">n8n-driven pipelines that sync your apps, handle webhooks, and recover gracefully from errors — so nothing silently fails.</p>
+      </div>
+
+      <div class="glass card-hover rounded-2xl p-7">
+        <h3 class="font-display font-bold text-lg text-white">Content &amp; Data Pipelines</h3>
+        <p class="mt-3 text-sm text-white/60 leading-relaxed">Automated media processing, structured data extraction, and short-form video pipelines built for scale.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ HOW IT WORKS ============ -->
+<section id="workflows" class="px-6 lg:px-8 py-24 border-t border-white/[0.06]">
+  <div class="mx-auto max-w-7xl">
+    <div class="mb-16 reveal" data-reveal>
+      <p class="font-mono text-xs tracking-[0.2em] uppercase text-cyan mb-3">HOW IT WORKS</p>
+      <h2 class="font-display font-extrabold text-3xl sm:text-4xl lg:text-5xl text-white tracking-tight">
+        From friction to fully automated, in<br class="hidden sm:inline"> three moves.
+      </h2>
+    </div>
+
+    <div class="relative grid md:grid-cols-3 gap-10 md:gap-8">
+      <div class="hidden md:block absolute top-[28px] left-[10%] right-[10%] h-px bg-gradient-to-r from-cyan/40 via-purple/40 to-cyan/40 z-0"></div>
+
+      <div class="relative z-10 reveal" data-reveal>
+        <div class="w-14 h-14 rounded-full border border-cyan/50 bg-[#080C14] flex items-center justify-center font-mono text-cyan text-sm font-bold shadow-[0_0_15px_rgba(0,242,254,0.2)] mb-6">
+          01
+        </div>
+        <h3 class="font-display font-bold text-xl text-white">Discovery &amp; Audit</h3>
+        <p class="mt-3 text-sm text-white/60 leading-relaxed">
+          We map every manual step in your current process and pinpoint exactly where time and money are leaking out.
+        </p>
+      </div>
+
+      <div class="relative z-10 reveal" data-reveal>
+        <div class="w-14 h-14 rounded-full border border-purple/50 bg-[#080C14] flex items-center justify-center font-mono text-purple text-sm font-bold shadow-[0_0_15px_rgba(157,78,221,0.2)] mb-6">
+          02
+        </div>
+        <h3 class="font-display font-bold text-xl text-white">Architecture &amp; Custom Build</h3>
+        <p class="mt-3 text-sm text-white/60 leading-relaxed">
+          I design and build the system using n8n, Node.js, and direct API integrations — tailored to your exact stack.
+        </p>
+      </div>
+
+      <div class="relative z-10 reveal" data-reveal>
+        <div class="w-14 h-14 rounded-full border border-cyan/50 bg-[#080C14] flex items-center justify-center font-mono text-cyan text-sm font-bold shadow-[0_0_15px_rgba(0,242,254,0.2)] mb-6">
+          03
+        </div>
+        <h3 class="font-display font-bold text-xl text-white">Deployment &amp; Scaling</h3>
+        <p class="mt-3 text-sm text-white/60 leading-relaxed">
+          Your system goes live with monitoring in place, then gets tuned and scaled as your volume and needs grow.
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ TECH STACK ============ -->
+<section id="stack" class="px-6 lg:px-8 py-20 border-t border-white/[0.06] overflow-hidden">
+  <div class="mx-auto max-w-7xl">
+    <p class="font-mono text-xs tracking-[0.25em] uppercase text-white/40 mb-8 text-center">Tech Stack &amp; Infrastructure</p>
+  </div>
+  <div class="relative">
+    <div class="flex ticker-track w-max gap-4 px-4">
+      <template id="stackTemplate"></template>
+    </div>
+  </div>
+</section>
+
+<!-- ============ CASE STUDIES ============ -->
+<section id="case-studies" class="px-6 lg:px-8 py-24 border-t border-white/[0.06]">
+  <div class="mx-auto max-w-7xl">
+    <div class="max-w-2xl reveal" data-reveal>
+      <p class="font-mono text-xs tracking-[0.25em] uppercase text-purple mb-4">Case Studies</p>
+      <h2 class="font-display font-extrabold text-3xl lg:text-4xl tracking-tight text-white">Systems currently running in production.</h2>
+    </div>
+
+    <div class="mt-12 grid md:grid-cols-3 gap-6">
+      <div class="glass card-hover rounded-2xl overflow-hidden reveal" data-reveal>
+        <div class="p-6">
+          <span class="font-mono text-[11px] text-cyan block mb-2">RAG &middot; CUSTOMER SUPPORT</span>
+          <h3 class="font-display font-bold text-lg text-white">AI-Powered Customer Support Agent</h3>
+          <p class="mt-2 text-sm text-white/60">Retrieval-augmented agent trained on internal docs, resolving 85% of tier-1 tickets without a human.</p>
+        </div>
+      </div>
+      <div class="glass card-hover rounded-2xl overflow-hidden reveal" data-reveal>
+        <div class="p-6">
+          <span class="font-mono text-[11px] text-purple block mb-2">MEDIA &middot; ANALYTICS</span>
+          <h3 class="font-display font-bold text-lg text-white">Short-Form Video &amp; Analytics Pipeline</h3>
+          <p class="mt-2 text-sm text-white/60">Automated clipping, captioning, and cross-platform posting with performance tracked back to source.</p>
+        </div>
+      </div>
+      <div class="glass card-hover rounded-2xl overflow-hidden reveal" data-reveal>
+        <div class="p-6">
+          <span class="font-mono text-[11px] text-cyan block mb-2">CRM &middot; WEBHOOK SYNC</span>
+          <h3 class="font-display font-bold text-lg text-white">Enterprise CRM &amp; Webhook Sync</h3>
+          <p class="mt-2 text-sm text-white/60">Bi-directional sync across business systems with error-handling logic and full audit logging.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ FINAL CTA & CAL.COM INTEGRATION WINDOW ============ -->
+<section id="contact" class="px-6 lg:px-8 py-24 border-t border-white/[0.06]">
+  <div class="mx-auto max-w-5xl text-center">
+    
+    <p class="font-mono text-xs tracking-[0.2em] uppercase text-purple mb-3">LET'S BUILD</p>
+    
+    <h2 class="font-display font-extrabold text-3xl sm:text-5xl text-white tracking-tight">
+      Ready to automate your business?
+    </h2>
+    
+    <p class="mt-4 text-white/60 text-sm sm:text-base max-w-2xl mx-auto leading-relaxed">
+      Book a free 30-minute discovery call. We'll map your current workflow and scope what an automated version looks like — no obligation.
+    </p>
+
+    <div class="mt-6 flex flex-wrap items-center justify-center gap-4 mb-12">
+      <a href="#contact" class="btn-primary rounded-full px-7 py-3 text-sm font-semibold">
+        Build Your Agent
+      </a>
+      <a href="mailto:hello@joeautomated.dev" class="btn-outline-cyan rounded-full px-7 py-3 text-sm font-medium font-mono">
+        hello@joeautomated.dev
+      </a>
+    </div>
+
+    <!-- CAL.COM EMBEDDED CONTAINER -->
+    <div class="mx-auto max-w-4xl bg-[#090D16] border border-white/15 rounded-2xl p-2 sm:p-4 shadow-2xl overflow-hidden relative">
+      <!-- CAL.COM INLINE ELEMENT -->
+      <div id="my-cal-inline" class="w-full min-h-[600px] overflow-auto rounded-xl"></div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ============ FOOTER ============ -->
+<footer class="px-6 lg:px-8 py-10 border-t border-white/[0.06]">
+  <div class="mx-auto max-w-7xl flex flex-col sm:flex-row items-center justify-between gap-6">
+    <p class="font-display font-bold text-sm">JOE <span class="grad-text-cyan-purple">[AUTOMATED]</span></p>
+    <p class="text-xs text-white/40">&copy; <span id="year"></span> Joe Automated. All rights reserved.</p>
+  </div>
+</footer>
+
+<script>
+  document.getElementById('year').textContent = new Date().getFullYear();
+
+  // Scroll reveal
+  const revealEls = document.querySelectorAll('[data-reveal]');
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting){
+        entry.target.classList.add('in');
+        io.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.1 });
+  revealEls.forEach(el => { io.observe(el); });
+
+  // Ticker
+  const stack = ['n8n', 'Node.js', 'Python', 'OpenAI', 'Anthropic', 'Docker', 'PostgreSQL', 'Make', 'REST APIs'];
+  const track = document.querySelector('.ticker-track');
+  const renderBadges = (list) => list.map(name => `
+    <span class="glass rounded-full px-5 py-2 font-mono text-sm text-white/70 whitespace-nowrap border border-white/10">${name}</span>
+  `).join('');
+  track.innerHTML = renderBadges(stack) + renderBadges(stack);
+
+  // Execution Card Animation Sequence
+  let currentStep = 1;
+  const latencies = ['816ms', '703ms', '972ms'];
+
+  function updateExecutionCard() {
+    const n1 = document.getElementById('node-1');
+    const n2 = document.getElementById('node-2');
+    const n3 = document.getElementById('node-3');
+    const n1num = document.getElementById('node-1-num');
+    const n2num = document.getElementById('node-2-num');
+    const n3num = document.getElementById('node-3-num');
+    const latencyEl = document.getElementById('latency-val');
+
+    [n1, n2, n3].forEach(el => {
+      el.className = 'node-card rounded-xl p-4 flex items-center justify-between';
+    });
+    
+    n1num.className = 'h-8 w-8 rounded-lg bg-white/5 border border-white/10 text-white/50 text-xs font-bold flex items-center justify-center transition-colors';
+    n2num.className = 'h-8 w-8 rounded-lg bg-white/5 border border-white/10 text-white/50 text-xs font-bold flex items-center justify-center transition-colors';
+    n3num.className = 'h-8 w-8 rounded-lg bg-white/5 border border-white/10 text-white/50 text-xs font-bold flex items-center justify-center transition-colors';
+
+    if (currentStep === 1) {
+      n1.classList.add('node-active-cyan');
+      n1num.className = 'h-8 w-8 rounded-lg bg-cyan/20 border border-cyan/50 text-cyan text-xs font-bold flex items-center justify-center transition-colors';
+      latencyEl.textContent = latencies[0];
+    } else if (currentStep === 2) {
+      n2.classList.add('node-active-purple');
+      n2num.className = 'h-8 w-8 rounded-lg bg-purple/20 border border-purple/50 text-purple text-xs font-bold flex items-center justify-center transition-colors';
+      latencyEl.textContent = latencies[1];
+    } else if (currentStep === 3) {
+      n3.classList.add('node-active-cyan');
+      n3num.className = 'h-8 w-8 rounded-lg bg-cyan/20 border border-cyan/50 text-cyan text-xs font-bold flex items-center justify-center transition-colors';
+      latencyEl.textContent = latencies[2];
+    }
+
+    currentStep = currentStep >= 3 ? 1 : currentStep + 1;
+  }
+
+  updateExecutionCard();
+  setInterval(updateExecutionCard, 2200);
+</script>
+
+</body>
+</html>
